@@ -11,10 +11,10 @@ abstract class MovieTabbedState extends Equatable {
 
 class MovieTabbedInitial extends MovieTabbedState {}
 
-class MovieTabbedChangedState extends MovieTabbedState {
+class MovieTabChanged extends MovieTabbedState {
   final List<MovieEntity> movies;
 
-  const MovieTabbedChangedState({int currentTabIndex, this.movies})
+  const MovieTabChanged({int currentTabIndex, this.movies})
       : super(currentTabIndex: currentTabIndex);
 
   @override
