@@ -6,6 +6,7 @@ import 'package:movie_app/presentation/bloc/movie_carousel/movie_carousel_bloc.d
 import 'package:movie_app/presentation/bloc/movie_tabbed/movie_tabbed_bloc.dart';
 import 'package:movie_app/presentation/journeys/home/movie_carousel/movie_carousel_widget.dart';
 import 'package:movie_app/presentation/journeys/home/movie_tabbed/movie_tabbed_widget.dart';
+import 'package:movie_app/presentation/journeys/navigation_drawer/navigation_drawer.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -48,31 +49,33 @@ class _HomeScreenState extends State<HomeScreen> {
           create: (context) => movieTabbedBloc,
         ),
       ],
-      child: Scaffold(body: BlocBuilder<MovieCarouselBloc, MovieCarouselState>(
-        builder: (context, state) {
-          if (state is MovieCarouselLoaded) {
-            return Stack(
-              fit: StackFit.expand,
-              children: <Widget>[
-                FractionallySizedBox(
-                  alignment: Alignment.topCenter,
-                  heightFactor: 0.6,
-                  child: MovieCarouselWidget(
-                    movies: state.movies,
-                    defaultIndex: state.defaultIndex,
-                  ),
-                ),
-                FractionallySizedBox(
-                  alignment: Alignment.bottomCenter,
-                  heightFactor: 0.4,
-                  child: MovieTabbedWidget(),
-                ),
-              ],
-            );
-          }
-          return const SizedBox.shrink();
-        },
-      )),
+      child: Scaffold(
+          drawer: NavigationDrawer(),
+          body: BlocBuilder<MovieCarouselBloc, MovieCarouselState>(
+            builder: (context, state) {
+              if (state is MovieCarouselLoaded) {
+                return Stack(
+                  fit: StackFit.expand,
+                  children: <Widget>[
+                    FractionallySizedBox(
+                      alignment: Alignment.topCenter,
+                      heightFactor: 0.6,
+                      child: MovieCarouselWidget(
+                        movies: state.movies,
+                        defaultIndex: state.defaultIndex,
+                      ),
+                    ),
+                    FractionallySizedBox(
+                      alignment: Alignment.bottomCenter,
+                      heightFactor: 0.4,
+                      child: MovieTabbedWidget(),
+                    ),
+                  ],
+                );
+              }
+              return const SizedBox.shrink();
+            },
+          )),
     );
   }
 }
