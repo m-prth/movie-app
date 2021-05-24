@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/common/constants/size_constants.dart';
-import 'package:movie_app/presentation/journeys/navigation_drawer/navigation_list_item.dart';
+
 import 'package:movie_app/common/extensions/size_extension.dart';
 import 'package:movie_app/presentation/themes/app_color.dart';
 

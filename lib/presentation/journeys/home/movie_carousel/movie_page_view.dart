@@ -4,7 +4,7 @@ import 'package:movie_app/common/constants/size_constants.dart';
 import 'package:movie_app/common/screenutil/screen_util.dart';
 import 'package:movie_app/domain/entities/movie_entity.dart';
 import 'package:movie_app/presentation/bloc/movie_backdrop/movie_backdrop_bloc.dart';
-import 'package:movie_app/presentation/journeys/home/movie_carousel/movie_card_widget.dart';
+
 import 'package:movie_app/common/extensions/size_extension.dart';
 
 import 'animated_movie_card_widget.dart';
