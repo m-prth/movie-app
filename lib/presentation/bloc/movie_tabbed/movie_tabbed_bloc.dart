@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+
 import 'package:movie_app/domain/entities/app_error.dart';
 import 'package:movie_app/domain/entities/movie_entity.dart';
 import 'package:movie_app/domain/entities/no_params.dart';

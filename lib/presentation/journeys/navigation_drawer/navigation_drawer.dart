@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie_app/common/constants/languages.dart';
 import 'package:movie_app/common/constants/size_constants.dart';
+import 'package:movie_app/common/constants/translation_constants.dart';
 import 'package:movie_app/common/extensions/size_extension.dart';
+import 'package:movie_app/presentation/app_localizations.dart';
+import 'package:movie_app/presentation/bloc/language/language_bloc.dart';
 import 'package:movie_app/presentation/journeys/navigation_drawer/navigation_expanded_list_item.dart';
 import 'package:movie_app/presentation/journeys/navigation_drawer/navigation_list_item.dart';
 import 'package:movie_app/presentation/widgets/logo.dart';
+import 'package:movie_app/common/extensions/string_extensions.dart';
 
 class NavigationDrawer extends StatelessWidget {
   const NavigationDrawer();
@@ -31,20 +37,24 @@ class NavigationDrawer extends StatelessWidget {
             ),
           ),
           NavigationListItem(
-            title: 'Favourite Movies',
+            title: TranslationConstants.favoriteMovies.t(context),
             onPressed: () {},
           ),
           NavigationExpandedListItem(
-            title: 'Language',
+            title: TranslationConstants.language.t(context),
+            onPressed: (index) {
+              BlocProvider.of<LanguageBloc>(context)
+                  .add(ToggleLanguageEvent(Languages.languages[index]));
+            },
+            children: Languages.languages.map((e) => e.value).toList(),
+          ),
+          //comments
+          NavigationListItem(
+            title: TranslationConstants.feedback.t(context),
             onPressed: () {},
-            children: ['English', 'Spanish'],
           ),
           NavigationListItem(
-            title: 'Feedback',
-            onPressed: () {},
-          ),
-          NavigationListItem(
-            title: 'About',
+            title: TranslationConstants.about.t(context),
             onPressed: () {},
           )
         ],
