@@ -8,8 +8,11 @@ import 'package:movie_app/presentation/app_localizations.dart';
 import 'package:movie_app/presentation/bloc/language/language_bloc.dart';
 import 'package:movie_app/presentation/journeys/navigation_drawer/navigation_expanded_list_item.dart';
 import 'package:movie_app/presentation/journeys/navigation_drawer/navigation_list_item.dart';
+import 'package:movie_app/presentation/themes/app_color.dart';
+import 'package:movie_app/presentation/widgets/app_dialog.dart';
 import 'package:movie_app/presentation/widgets/logo.dart';
 import 'package:movie_app/common/extensions/string_extensions.dart';
+import 'package:wiredash/wiredash.dart';
 
 class NavigationDrawer extends StatelessWidget {
   const NavigationDrawer();
@@ -51,14 +54,37 @@ class NavigationDrawer extends StatelessWidget {
           //comments
           NavigationListItem(
             title: TranslationConstants.feedback.t(context),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pop();
+              Wiredash.of(context).show();
+            },
           ),
           NavigationListItem(
             title: TranslationConstants.about.t(context),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pop();
+              _showDialog(context);
+            },
           )
         ],
       ),
+    );
+  }
+
+  void _showDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AppDialog(
+          title: TranslationConstants.about,
+          description: TranslationConstants.aboutDescription,
+          buttonText: TranslationConstants.okay,
+          image: Image.asset(
+            'assets/pngs/tmdb_logo.png',
+            height: Sizes.dimen_32.h,
+          ),
+        );
+      },
     );
   }
 }
