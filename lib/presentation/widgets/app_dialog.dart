@@ -5,6 +5,7 @@ import 'package:movie_app/presentation/themes/app_color.dart';
 import 'package:movie_app/common/extensions/size_extension.dart';
 import 'package:movie_app/common/extensions/string_extensions.dart';
 import 'package:movie_app/presentation/widgets/button.dart';
+//comments
 
 class AppDialog extends StatelessWidget {
   final String title, description, buttonText;

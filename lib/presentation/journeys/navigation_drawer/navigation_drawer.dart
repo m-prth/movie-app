@@ -4,11 +4,11 @@ import 'package:movie_app/common/constants/languages.dart';
 import 'package:movie_app/common/constants/size_constants.dart';
 import 'package:movie_app/common/constants/translation_constants.dart';
 import 'package:movie_app/common/extensions/size_extension.dart';
-import 'package:movie_app/presentation/app_localizations.dart';
+
 import 'package:movie_app/presentation/bloc/language/language_bloc.dart';
 import 'package:movie_app/presentation/journeys/navigation_drawer/navigation_expanded_list_item.dart';
 import 'package:movie_app/presentation/journeys/navigation_drawer/navigation_list_item.dart';
-import 'package:movie_app/presentation/themes/app_color.dart';
+
 import 'package:movie_app/presentation/widgets/app_dialog.dart';
 import 'package:movie_app/presentation/widgets/logo.dart';
 import 'package:movie_app/common/extensions/string_extensions.dart';

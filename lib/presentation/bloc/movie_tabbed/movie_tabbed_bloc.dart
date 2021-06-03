@@ -42,7 +42,9 @@ class MovieTabbedBloc extends Bloc<MovieTabbedEvent, MovieTabbedState> {
           moviesEither = await getComingSoon(NoParams());
       }
       yield moviesEither.fold(
-        (l) => MovieTabbedLoadError(currentTabIndex: event.currentTabIndex),
+        (l) => MovieTabbedLoadError(
+            currentTabIndex: event.currentTabIndex,
+            appErrorType: l.appErrorType),
         (movies) {
           return MovieTabChanged(
               currentTabIndex: event.currentTabIndex, movies: movies);

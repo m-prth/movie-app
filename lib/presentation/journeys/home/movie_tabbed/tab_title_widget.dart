@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_app/common/constants/size_constants.dart';
-import 'package:movie_app/presentation/app_localizations.dart';
+
 import 'package:movie_app/presentation/themes/app_color.dart';
 import 'package:movie_app/presentation/themes/theme_text.dart';
 import 'package:movie_app/common/extensions/size_extension.dart';
