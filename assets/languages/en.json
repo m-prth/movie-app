@@ -11,6 +11,9 @@
     "somethingWentWrong": "Something went wrong...",
     "aboutDescription": "This product uses the TMDb API but is not endorsed or certified by TMDb. This app is developed for education purposes by Parth Mistry.",
     "checkNetwork": "Please check your network and press the Retry button by pressing the Feedback button.",
-    "noMovies": "Sorry, no movies under this section."
+    "noMovies": "Sorry, no movies under this section.",
+    "cast": "Cast",
+    "watchTrailer":"Watch Trailers"
+
 
 }
