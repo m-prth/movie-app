@@ -13,5 +13,6 @@
     "checkNetwork": "Verifique su red y presione el botón Reintentar presionando el botón Comentarios.",
     "noMovies": "Lo siento, no hay películas en esta sección.",
     "cast": "Emitir",
-    "watchTrailer":"Ver Trailers"
+    "watchTrailer":"Ver Trailers",
+    "noMoviesSearched":"No se encontraron películas, busque otra cosa."
 }
