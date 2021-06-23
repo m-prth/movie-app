@@ -5,7 +5,6 @@ import 'package:movie_app/presentation/bloc/videos/videos_bloc.dart';
 import 'package:movie_app/presentation/journeys/watch_video/watch_video_arguements.dart';
 import 'package:movie_app/presentation/journeys/watch_video/watch_video_screen.dart';
 import 'package:movie_app/presentation/widgets/button.dart';
-import 'package:movie_app/common/extensions/string_extensions.dart';
 
 class VideosWidget extends StatelessWidget {
   final VideosBloc videosBloc;
