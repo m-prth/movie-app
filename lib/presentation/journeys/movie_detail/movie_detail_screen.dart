@@ -75,8 +75,9 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(
-                          horizontal: Sizes.dimen_16.w,
-                          vertical: Sizes.dimen_8.h),
+                        horizontal: Sizes.dimen_16.w,
+                        vertical: Sizes.dimen_8.h,
+                      ),
                       child: Text(
                         movieDetail.overview,
                         style: Theme.of(context).textTheme.bodyText2,

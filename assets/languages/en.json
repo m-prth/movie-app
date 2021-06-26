@@ -14,7 +14,8 @@
     "noMovies": "Sorry, no movies under this section.",
     "cast": "Cast",
     "watchTrailer":"Watch Trailers",
-    "noMoviesSearched":"No movies found, please search something else."
+    "noMoviesSearched":"No movies found, please search something else.",
+    "noFavoriteMovies":"No Favorite Movies"
 
 
 }
