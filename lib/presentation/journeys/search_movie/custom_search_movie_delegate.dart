@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/common/constants/size_constants.dart';
 import 'package:movie_app/common/constants/translation_constants.dart';
-import 'package:movie_app/domain/entities/app_error.dart';
 import 'package:movie_app/presentation/bloc/search_movie/search_movie_bloc.dart';
 import 'package:movie_app/presentation/journeys/search_movie/search_movie_card.dart';
 import 'package:movie_app/presentation/themes/app_color.dart';

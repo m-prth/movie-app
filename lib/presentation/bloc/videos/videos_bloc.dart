@@ -7,7 +7,6 @@ import 'package:flutter/foundation.dart';
 import 'package:movie_app/domain/entities/app_error.dart';
 import 'package:movie_app/domain/entities/movie_params.dart';
 import 'package:movie_app/domain/entities/video_entity.dart';
-import 'package:movie_app/domain/repositories/movie_repository.dart';
 import 'package:movie_app/domain/usecases/get_videos.dart';
 
 part 'videos_event.dart';

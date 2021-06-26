@@ -11,6 +11,6 @@ class SaveMovie extends UseCase<void, MovieEntity> {
 
   @override
   Future<Either<AppError, void>> call(MovieEntity params) async {
-    await movieRepository.saveMovie(params);
+    return await movieRepository.saveMovie(params);
   }
 }
