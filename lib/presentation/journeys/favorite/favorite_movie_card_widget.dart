@@ -51,7 +51,7 @@ class FavoriteMovieCardWidget extends StatelessWidget {
                     padding: EdgeInsets.all(Sizes.dimen_12.w),
                     child: Icon(
                       Icons.delete,
-                      size: Sizes.dimen_12.w,
+                      size: Sizes.dimen_12.h,
                       color: Colors.white,
                     ),
                   ),
