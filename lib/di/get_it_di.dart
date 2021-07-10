@@ -35,12 +35,12 @@ import 'package:movie_app/presentation/bloc/videos/videos_bloc.dart';
 final getItInstance = GetIt.I;
 
 Future init() async {
-  //clients
+  // ! clients
   getItInstance.registerLazySingleton<Client>(() => Client());
   getItInstance
       .registerLazySingleton<ApiClient>(() => ApiClient(getItInstance()));
 
-  //datasources
+  // ! datasources
   getItInstance.registerLazySingleton<MovieRemoteDataSource>(
       () => MovieRemoteDataSourceImpl(getItInstance()));
   getItInstance.registerLazySingleton<MovieLocalDataSource>(
@@ -48,7 +48,7 @@ Future init() async {
   getItInstance.registerLazySingleton<LanguageLocalDataSource>(
       () => LanguageLocalDataSourceImpl());
 
-  //usecases
+  // ! usecases
   getItInstance
       .registerLazySingleton<GetTrending>(() => GetTrending(getItInstance()));
   getItInstance.registerLazySingleton<GetPlayingNow>(
@@ -78,13 +78,13 @@ Future init() async {
   getItInstance.registerLazySingleton<GetPreferredLanguage>(
       () => GetPreferredLanguage(getItInstance()));
 
-  //repository
+  // ! repository
   getItInstance.registerLazySingleton<MovieRepository>(
       () => MovieRepositoryImpl(getItInstance(), getItInstance()));
   getItInstance.registerLazySingleton<AppRepository>(
       () => AppRepositoryImpl(getItInstance()));
 
-  //blocs
+  // ! blocs
   getItInstance.registerFactory(() => MovieCarouselBloc(
       getTrending: getItInstance(), movieBackdropBloc: getItInstance()));
   getItInstance.registerFactory(() => MovieBackdropBloc());
@@ -112,7 +112,7 @@ Future init() async {
     ),
   );
 
-  //internalionalization
+  // ! internalionalization
   getItInstance.registerSingleton<LanguageBloc>(
     LanguageBloc(
       getPreferredLanguage: getItInstance(),

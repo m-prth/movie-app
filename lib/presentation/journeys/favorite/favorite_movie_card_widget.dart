@@ -9,12 +9,13 @@ import 'package:movie_app/common/extensions/size_extension.dart';
 import 'package:movie_app/presentation/bloc/favorite/favorite_bloc.dart';
 import 'package:movie_app/presentation/journeys/movie_detail/movie_detail_arguement.dart';
 
-
 class FavoriteMovieCardWidget extends StatelessWidget {
   final MovieEntity movie;
 
-  const FavoriteMovieCardWidget({Key key, @required this.movie})
-      : super(key: key);
+  const FavoriteMovieCardWidget({
+    Key key,
+    @required this.movie,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +26,10 @@ class FavoriteMovieCardWidget extends StatelessWidget {
       ),
       child: GestureDetector(
         onTap: () {
-          Navigator.of(context).pushNamed(RouteList.movieDetail,arguments:MovieDetailArguements(movie.id) ,);
-
+          Navigator.of(context).pushNamed(
+            RouteList.movieDetail,
+            arguments: MovieDetailArguements(movie.id),
+          );
         },
         child: ClipRRect(
           borderRadius: BorderRadius.circular(Sizes.dimen_8.w),

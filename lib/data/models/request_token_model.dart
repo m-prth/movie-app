@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class RequestTokenModel {
   final bool success;
   final String requestToken;
