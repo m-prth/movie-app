@@ -65,4 +65,7 @@ extension ThemeTextExtension on TextTheme {
   TextStyle get greyCaption => caption.copyWith(
         color: Colors.grey,
       );
+  TextStyle get orangeSubtitle1 => subtitle1.copyWith(
+        color: Colors.orangeAccent,
+      );
 }

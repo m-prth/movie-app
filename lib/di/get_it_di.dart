@@ -1,12 +1,16 @@
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 import 'package:movie_app/data/core/api_client.dart';
+import 'package:movie_app/data/data_sources/authentication_local_data_source.dart';
+import 'package:movie_app/data/data_sources/authentication_remote_data_source.dart';
 import 'package:movie_app/data/data_sources/local_language_data_source.dart';
 import 'package:movie_app/data/data_sources/movie_local_data_source.dart';
 import 'package:movie_app/data/data_sources/movie_remote_data_source.dart';
 import 'package:movie_app/data/repositories/app_repository_impl.dart';
+import 'package:movie_app/data/repositories/authentication_repository_impl.dart';
 import 'package:movie_app/data/repositories/movie_repository_impl.dart';
 import 'package:movie_app/domain/repositories/app_repository.dart';
+import 'package:movie_app/domain/repositories/authentication_repository.dart';
 import 'package:movie_app/domain/repositories/movie_repository.dart';
 import 'package:movie_app/domain/usecases/check_if_movie_favorite.dart';
 import 'package:movie_app/domain/usecases/delete_favorite_movies.dart';
@@ -20,11 +24,14 @@ import 'package:movie_app/domain/usecases/get_preferred_language.dart';
 import 'package:movie_app/domain/usecases/get_search_movies.dart';
 import 'package:movie_app/domain/usecases/get_trending.dart';
 import 'package:movie_app/domain/usecases/get_videos.dart';
+import 'package:movie_app/domain/usecases/login_user.dart';
+import 'package:movie_app/domain/usecases/logout_user.dart';
 import 'package:movie_app/domain/usecases/save_movies.dart';
 import 'package:movie_app/domain/usecases/update_language.dart';
 import 'package:movie_app/presentation/bloc/cast/cast_bloc.dart';
 import 'package:movie_app/presentation/bloc/favorite/favorite_bloc.dart';
 import 'package:movie_app/presentation/bloc/language/language_bloc.dart';
+import 'package:movie_app/presentation/bloc/login/login_bloc.dart';
 import 'package:movie_app/presentation/bloc/movie_backdrop/movie_backdrop_bloc.dart';
 import 'package:movie_app/presentation/bloc/movie_carousel/movie_carousel_bloc.dart';
 import 'package:movie_app/presentation/bloc/movie_detail/movie_detail_bloc.dart';
@@ -47,7 +54,10 @@ Future init() async {
       () => MovieLocalDataSourceImpl());
   getItInstance.registerLazySingleton<LanguageLocalDataSource>(
       () => LanguageLocalDataSourceImpl());
-
+  getItInstance.registerLazySingleton<AuthenticationRemoteDataSource>(
+      () => AuthenticationRemoteDataSourceImpl(getItInstance()));
+  getItInstance.registerLazySingleton<AuthenticationLocalDataSource>(
+      () => AuthenticationLocalDataSourceImpl());
   // ! usecases
   getItInstance
       .registerLazySingleton<GetTrending>(() => GetTrending(getItInstance()));
@@ -57,6 +67,7 @@ Future init() async {
       .registerLazySingleton<GetPopular>(() => GetPopular(getItInstance()));
   getItInstance.registerLazySingleton<GetComingSoon>(
       () => GetComingSoon(getItInstance()));
+
   getItInstance.registerLazySingleton<GetMovieDetail>(
       () => GetMovieDetail(getItInstance()));
   getItInstance
@@ -77,12 +88,17 @@ Future init() async {
       () => UpdateLanguage(getItInstance()));
   getItInstance.registerLazySingleton<GetPreferredLanguage>(
       () => GetPreferredLanguage(getItInstance()));
-
+  getItInstance
+      .registerLazySingleton<LoginUser>(() => LoginUser(getItInstance()));
+  getItInstance
+      .registerLazySingleton<LogoutUser>(() => LogoutUser(getItInstance()));
   // ! repository
   getItInstance.registerLazySingleton<MovieRepository>(
       () => MovieRepositoryImpl(getItInstance(), getItInstance()));
   getItInstance.registerLazySingleton<AppRepository>(
       () => AppRepositoryImpl(getItInstance()));
+  getItInstance.registerLazySingleton<AuthenticationRepository>(
+      () => AuthenticationRepositoryImpl(getItInstance(), getItInstance()));
 
   // ! blocs
   getItInstance.registerFactory(() => MovieCarouselBloc(
@@ -103,12 +119,19 @@ Future init() async {
   getItInstance.registerFactory(() => VideosBloc(getVideos: getItInstance()));
   getItInstance
       .registerFactory(() => SearchMovieBloc(searchMovies: getItInstance()));
+
   getItInstance.registerFactory(
     () => FavoriteBloc(
       saveMovie: getItInstance(),
       getFavoriteMovies: getItInstance(),
       deleteFavoriteMovies: getItInstance(),
       checkIfMovieFavorite: getItInstance(),
+    ),
+  );
+  getItInstance.registerFactory(
+    () => LoginBloc(
+      loginUser: getItInstance(),
+      logoutUser: getItInstance(),
     ),
   );
 

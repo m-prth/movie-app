@@ -6,6 +6,7 @@ import 'package:movie_app/common/screenutil/screen_util.dart';
 import 'package:movie_app/di/get_it_di.dart';
 import 'package:movie_app/presentation/app_localizations.dart';
 import 'package:movie_app/presentation/bloc/language/language_bloc.dart';
+import 'package:movie_app/presentation/bloc/login/login_bloc.dart';
 import 'package:movie_app/presentation/fade_page_route_builder.dart';
 
 import 'package:movie_app/presentation/routes.dart';
@@ -22,24 +23,34 @@ class MovieApp extends StatefulWidget {
 class _MovieAppState extends State<MovieApp> {
   final _navigatorKey = GlobalKey<NavigatorState>();
   LanguageBloc _languageBloc;
+  LoginBloc _loginBloc;
   @override
   void initState() {
     super.initState();
     _languageBloc = getItInstance<LanguageBloc>();
     _languageBloc.add(LoadPreferredLanguageEvent());
+    _loginBloc = getItInstance<LoginBloc>();
   }
 
   @override
   void dispose() {
-    _languageBloc.close();
+    _languageBloc?.close();
+    _loginBloc?.close();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init();
-    return BlocProvider<LanguageBloc>.value(
-      value: _languageBloc,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<LanguageBloc>.value(
+          value: _languageBloc,
+        ),
+        BlocProvider<LoginBloc>.value(
+          value: _loginBloc,
+        ),
+      ],
       child: BlocBuilder<LanguageBloc, LanguageState>(
         builder: (context, state) {
           if (state is LanguageLoaded) {
@@ -59,7 +70,6 @@ class _MovieAppState extends State<MovieApp> {
                   textTheme: ThemeText.getTextTheme(),
                   appBarTheme: AppBarTheme(elevation: 0),
                 ),
-
                 supportedLocales:
                     Languages.languages.map((e) => Locale(e.code)).toList(),
                 locale: state.locale,
@@ -68,11 +78,11 @@ class _MovieAppState extends State<MovieApp> {
                   GlobalMaterialLocalizations.delegate,
                   GlobalWidgetsLocalizations.delegate,
                 ],
-                builder: (context, child){
+                builder: (context, child) {
                   return child;
                 },
                 initialRoute: RouteList.initial,
-                onGenerateRoute: (RouteSettings settings){
+                onGenerateRoute: (RouteSettings settings) {
                   final routes = Routes.getRoutes(settings);
                   final WidgetBuilder builder = routes[settings.name];
                   return FadePageRouteBuilder(

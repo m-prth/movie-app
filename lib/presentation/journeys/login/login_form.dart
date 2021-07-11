@@ -1,29 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie_app/common/constants/route_constants.dart';
 import 'package:movie_app/common/constants/size_constants.dart';
 import 'package:movie_app/common/constants/translation_constants.dart';
 import 'package:movie_app/common/extensions/size_extension.dart';
 import 'package:movie_app/common/extensions/string_extensions.dart';
+import 'package:movie_app/presentation/bloc/login/login_bloc.dart';
 import 'package:movie_app/presentation/journeys/login/label_field_widget.dart';
+import 'package:movie_app/presentation/widgets/button.dart';
+import 'package:movie_app/presentation/themes/theme_text.dart';
 
 class LoginForm extends StatefulWidget {
   @override
-  State<LoginForm> createState() => _LoginFormState();
+  _LoginFormState createState() => _LoginFormState();
 }
 
 class _LoginFormState extends State<LoginForm> {
   TextEditingController _userNameController, _passwordController;
+  bool enableSignIn = false;
 
   @override
   void initState() {
     super.initState();
     _userNameController = TextEditingController();
     _passwordController = TextEditingController();
+
+    _userNameController.addListener(() {
+      setState(() {
+        enableSignIn = _userNameController.text.isNotEmpty &&
+            _passwordController.text.isNotEmpty;
+      });
+    });
+    _passwordController.addListener(() {
+      setState(() {
+        enableSignIn = _userNameController.text.isNotEmpty &&
+            _passwordController.text.isNotEmpty;
+      });
+    });
   }
 
   @override
   void dispose() {
-    _userNameController?.clear();
-    _passwordController?.clear();
+    _userNameController?.dispose();
+    _passwordController?.dispose();
     super.dispose();
   }
 
@@ -32,7 +51,9 @@ class _LoginFormState extends State<LoginForm> {
     return SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.symmetric(
-            horizontal: Sizes.dimen_32.w, vertical: Sizes.dimen_24.h),
+          horizontal: Sizes.dimen_32.w,
+          vertical: Sizes.dimen_24.h,
+        ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -45,16 +66,47 @@ class _LoginFormState extends State<LoginForm> {
               ),
             ),
             LabelFieldWidget(
-              controller: _userNameController,
-              hintText: TranslationConstants.enterTMDbUsername.t(context),
-              isPasswordField: false,
               label: TranslationConstants.username.t(context),
+              hintText: TranslationConstants.enterTMDbUsername.t(context),
+              controller: _userNameController,
             ),
             LabelFieldWidget(
-              controller: _passwordController,
-              hintText: TranslationConstants.enterPassword.t(context),
-              isPasswordField: true,
               label: TranslationConstants.password.t(context),
+              hintText: TranslationConstants.enterPassword.t(context),
+              controller: _passwordController,
+              isPasswordField: true,
+            ),
+            BlocConsumer<LoginBloc, LoginState>(
+              buildWhen: (previous, current) => current is LoginError,
+              builder: (context, state) {
+                if (state is LoginError)
+                  return Text(
+                    state.message.t(context),
+                    style: Theme.of(context).textTheme.orangeSubtitle1,
+                  );
+                return const SizedBox.shrink();
+              },
+              listenWhen: (previous, current) => current is LoginSuccess,
+              listener: (context, state) {
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                  RouteList.home,
+                  (route) => false,
+                );
+              },
+            ),
+            Button(
+              onPressed: enableSignIn
+                  ? () {
+                      BlocProvider.of<LoginBloc>(context).add(
+                        LoginInitiateEvent(
+                          _userNameController.text,
+                          _passwordController.text,
+                        ),
+                      );
+                    }
+                  : null,
+              text: TranslationConstants.signIn,
+              isEnabled: enableSignIn,
             ),
           ],
         ),

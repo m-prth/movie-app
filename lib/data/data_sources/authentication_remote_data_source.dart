@@ -3,8 +3,9 @@ import 'package:movie_app/data/models/request_token_model.dart';
 
 abstract class AuthenticationRemoteDataSource {
   Future<RequestTokenModel> getRequestToken();
-  Future<RequestTokenModel> validateWithLogIn(Map<String, dynamic> requestBody);
+  Future<RequestTokenModel> validateWithLogin(Map<String, dynamic> requestBody);
   Future<String> createSession(Map<String, dynamic> requestBody);
+  Future<bool> deleteSession(String sessionId);
 }
 
 class AuthenticationRemoteDataSourceImpl
@@ -12,13 +13,6 @@ class AuthenticationRemoteDataSourceImpl
   final ApiClient _client;
 
   AuthenticationRemoteDataSourceImpl(this._client);
-  @override
-  Future<String> createSession(Map<String, dynamic> requestBody) async {
-    final response =
-        await _client.post('authentication/session/new', params: requestBody);
-    print(response);
-    return response['success'] ? response['session_id'] : null;
-  }
 
   @override
   Future<RequestTokenModel> getRequestToken() async {
@@ -29,7 +23,7 @@ class AuthenticationRemoteDataSourceImpl
   }
 
   @override
-  Future<RequestTokenModel> validateWithLogIn(
+  Future<RequestTokenModel> validateWithLogin(
       Map<String, dynamic> requestBody) async {
     final response = await _client.post(
       'authentication/token/validate_with_login',
@@ -37,5 +31,26 @@ class AuthenticationRemoteDataSourceImpl
     );
     print(response);
     return RequestTokenModel.fromJson(response);
+  }
+
+  @override
+  Future<String> createSession(Map<String, dynamic> requestBody) async {
+    final response = await _client.post(
+      'authentication/session/new',
+      params: requestBody,
+    );
+    print(response);
+    return response['success'] ? response['session_id'] : null;
+  }
+
+  @override
+  Future<bool> deleteSession(String sessionId) async {
+    final response = await _client.deleteWithBody(
+      'authentication/session',
+      params: {
+        'session_id': sessionId,
+      },
+    );
+    return response['success'] ?? false;
   }
 }

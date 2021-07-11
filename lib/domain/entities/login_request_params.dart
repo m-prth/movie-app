@@ -9,5 +9,8 @@ class LoginRequestParams {
     @required this.password,
   });
 
-  Map<String, dynamic> toJson() => {'username': userName, 'password': password};
+  Map<String, dynamic> toJson() => {
+        'username': userName,
+        'password': password,
+      };
 }

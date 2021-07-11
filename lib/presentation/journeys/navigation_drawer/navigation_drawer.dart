@@ -7,6 +7,7 @@ import 'package:movie_app/common/constants/translation_constants.dart';
 import 'package:movie_app/common/extensions/size_extension.dart';
 
 import 'package:movie_app/presentation/bloc/language/language_bloc.dart';
+import 'package:movie_app/presentation/bloc/login/login_bloc.dart';
 
 import 'package:movie_app/presentation/journeys/navigation_drawer/navigation_expanded_list_item.dart';
 import 'package:movie_app/presentation/journeys/navigation_drawer/navigation_list_item.dart';
@@ -69,7 +70,20 @@ class NavigationDrawer extends StatelessWidget {
               Navigator.of(context).pop();
               _showDialog(context);
             },
-          )
+          ),
+          BlocListener<LoginBloc, LoginState>(
+            listenWhen: (previous, current) => current is LogoutSuccess,
+            listener: (context, state) {
+              Navigator.of(context)
+                  .pushNamedAndRemoveUntil(RouteList.initial, (route) => false);
+            },
+            child: NavigationListItem(
+              title: TranslationConstants.logout.t(context),
+              onPressed: () {
+                BlocProvider.of<LoginBloc>(context).add(LogoutEvent());
+              },
+            ),
+          ),
         ],
       ),
     );

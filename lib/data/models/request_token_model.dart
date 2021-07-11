@@ -12,10 +12,12 @@ class RequestTokenModel {
   factory RequestTokenModel.fromJson(Map<String, dynamic> json) {
     return RequestTokenModel(
       success: json['success'],
-      requestToken: json['requestToken'],
-      expiresAt: json['expiresAt'],
+      requestToken: json['request_token'],
+      expiresAt: json['expires_at'],
     );
   }
 
-  Map<String, dynamic> toJson() => {'request_token': requestToken};
+  Map<String, dynamic> toJson() => {
+        'request_token': requestToken,
+      };
 }
