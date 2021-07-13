@@ -3,10 +3,17 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="?android:colorBackground" />
 
-    <!-- You can insert your own image assets here -->
-    <!-- <item>
+   <item>
+        <shape>
+            <gradient android:angle="270"
+                android:startColor="#A74DBC"
+                android:endColor="#604FEF" />
+        </shape>
+    </item>
+
+    <item>
         <bitmap
             android:gravity="center"
-            android:src="@mipmap/launch_image" />
-    </item> -->
+            android:src="@mipmap/logo" />
+    </item>
 </layer-list>

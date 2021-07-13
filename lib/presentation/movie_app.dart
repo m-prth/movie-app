@@ -6,8 +6,10 @@ import 'package:movie_app/common/screenutil/screen_util.dart';
 import 'package:movie_app/di/get_it_di.dart';
 import 'package:movie_app/presentation/app_localizations.dart';
 import 'package:movie_app/presentation/bloc/language/language_bloc.dart';
+import 'package:movie_app/presentation/bloc/loading/loading_bloc.dart';
 import 'package:movie_app/presentation/bloc/login/login_bloc.dart';
 import 'package:movie_app/presentation/fade_page_route_builder.dart';
+import 'package:movie_app/presentation/journeys/loading/loading_screen.dart';
 
 import 'package:movie_app/presentation/routes.dart';
 import 'package:movie_app/presentation/themes/app_color.dart';
@@ -24,18 +26,21 @@ class _MovieAppState extends State<MovieApp> {
   final _navigatorKey = GlobalKey<NavigatorState>();
   LanguageBloc _languageBloc;
   LoginBloc _loginBloc;
+  LoadingBloc _loadingBloc;
   @override
   void initState() {
     super.initState();
     _languageBloc = getItInstance<LanguageBloc>();
     _languageBloc.add(LoadPreferredLanguageEvent());
     _loginBloc = getItInstance<LoginBloc>();
+    _loadingBloc = getItInstance<LoadingBloc>();
   }
 
   @override
   void dispose() {
     _languageBloc?.close();
     _loginBloc?.close();
+    _loadingBloc?.close();
     super.dispose();
   }
 
@@ -49,6 +54,9 @@ class _MovieAppState extends State<MovieApp> {
         ),
         BlocProvider<LoginBloc>.value(
           value: _loginBloc,
+        ),
+        BlocProvider<LoadingBloc>.value(
+          value: _loadingBloc,
         ),
       ],
       child: BlocBuilder<LanguageBloc, LanguageState>(
@@ -79,7 +87,9 @@ class _MovieAppState extends State<MovieApp> {
                   GlobalWidgetsLocalizations.delegate,
                 ],
                 builder: (context, child) {
-                  return child;
+                  return LoadingScreen(
+                    screen: child,
+                  );
                 },
                 initialRoute: RouteList.initial,
                 onGenerateRoute: (RouteSettings settings) {

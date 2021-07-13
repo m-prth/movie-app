@@ -29,12 +29,12 @@ dependencies:
   cupertino_icons: ^1.0.2
   dartz: ^0.9.1
   equatable: ^2.0.0
+  flare_flutter: ^2.0.6
   flutter_bloc: ^5.0.0
   flutter_svg: ^0.19.3
   get_it: ^4.0.2
   google_fonts: ^1.1.0
-  hive: ^1.4.1+1
-  
+  hive: ^1.4.1+1  
   http: ^0.12.1
   path_provider: ^1.6.11
   wiredash: ^0.2.0
@@ -59,6 +59,7 @@ flutter:
     - assets/svgs/
     - assets/pngs/
     - assets/languages/
+    - assets/animations/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see
