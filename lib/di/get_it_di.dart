@@ -31,6 +31,7 @@ import 'package:movie_app/domain/usecases/update_language.dart';
 import 'package:movie_app/presentation/bloc/cast/cast_bloc.dart';
 import 'package:movie_app/presentation/bloc/favorite/favorite_bloc.dart';
 import 'package:movie_app/presentation/bloc/language/language_bloc.dart';
+import 'package:movie_app/presentation/bloc/loading/loading_bloc.dart';
 import 'package:movie_app/presentation/bloc/login/login_bloc.dart';
 import 'package:movie_app/presentation/bloc/movie_backdrop/movie_backdrop_bloc.dart';
 import 'package:movie_app/presentation/bloc/movie_carousel/movie_carousel_bloc.dart';
@@ -102,7 +103,10 @@ Future init() async {
 
   // ! blocs
   getItInstance.registerFactory(() => MovieCarouselBloc(
-      getTrending: getItInstance(), movieBackdropBloc: getItInstance()));
+        loadingBloc: getItInstance(),
+        getTrending: getItInstance(),
+        movieBackdropBloc: getItInstance(),
+      ));
   getItInstance.registerFactory(() => MovieBackdropBloc());
   getItInstance.registerFactory(() => MovieTabbedBloc(
         getComingSoon: getItInstance(),
@@ -110,15 +114,28 @@ Future init() async {
         getPopular: getItInstance(),
       ));
   getItInstance.registerFactory(() => MovieDetailBloc(
+        loadingBloc: getItInstance(),
         favoriteBloc: getItInstance(),
         getMovieDetail: getItInstance(),
         castBloc: getItInstance(),
         videosBloc: getItInstance(),
       ));
-  getItInstance.registerFactory(() => CastBloc(getCastCrew: getItInstance()));
-  getItInstance.registerFactory(() => VideosBloc(getVideos: getItInstance()));
-  getItInstance
-      .registerFactory(() => SearchMovieBloc(searchMovies: getItInstance()));
+  getItInstance.registerFactory(
+    () => CastBloc(
+      getCastCrew: getItInstance(),
+    ),
+  );
+  getItInstance.registerFactory(
+    () => VideosBloc(
+      getVideos: getItInstance(),
+    ),
+  );
+  getItInstance.registerFactory(
+    () => SearchMovieBloc(
+      loadingBloc: getItInstance(),
+      searchMovies: getItInstance(),
+    ),
+  );
 
   getItInstance.registerFactory(
     () => FavoriteBloc(
@@ -132,8 +149,10 @@ Future init() async {
     () => LoginBloc(
       loginUser: getItInstance(),
       logoutUser: getItInstance(),
+      loadingBloc: getItInstance(),
     ),
   );
+  getItInstance.registerSingleton<LoadingBloc>(LoadingBloc());
 
   // ! internalionalization
   getItInstance.registerSingleton<LanguageBloc>(
