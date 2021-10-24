@@ -6,8 +6,8 @@ import 'package:movie_app/common/constants/size_constants.dart';
 import 'package:movie_app/common/constants/translation_constants.dart';
 import 'package:movie_app/common/extensions/size_extension.dart';
 
-import 'package:movie_app/presentation/bloc/language/language_bloc.dart';
-import 'package:movie_app/presentation/bloc/login/login_bloc.dart';
+import 'package:movie_app/presentation/bloc/language/language_cubit.dart';
+import 'package:movie_app/presentation/bloc/login/login_cubit.dart';
 
 import 'package:movie_app/presentation/journeys/navigation_drawer/navigation_expanded_list_item.dart';
 import 'package:movie_app/presentation/journeys/navigation_drawer/navigation_list_item.dart';
@@ -51,8 +51,8 @@ class NavigationDrawer extends StatelessWidget {
           NavigationExpandedListItem(
             title: TranslationConstants.language.t(context),
             onPressed: (index) {
-              BlocProvider.of<LanguageBloc>(context)
-                  .add(ToggleLanguageEvent(Languages.languages[index]));
+              BlocProvider.of<LanguageCubit>(context)
+                  .toggleLanguage(Languages.languages[index]);
             },
             children: Languages.languages.map((e) => e.value).toList(),
           ),
@@ -71,7 +71,7 @@ class NavigationDrawer extends StatelessWidget {
               _showDialog(context);
             },
           ),
-          BlocListener<LoginBloc, LoginState>(
+          BlocListener<LoginCubit, LoginState>(
             listenWhen: (previous, current) => current is LogoutSuccess,
             listener: (context, state) {
               Navigator.of(context)
@@ -80,7 +80,7 @@ class NavigationDrawer extends StatelessWidget {
             child: NavigationListItem(
               title: TranslationConstants.logout.t(context),
               onPressed: () {
-                BlocProvider.of<LoginBloc>(context).add(LogoutEvent());
+                BlocProvider.of<LoginCubit>(context).logout();
               },
             ),
           ),

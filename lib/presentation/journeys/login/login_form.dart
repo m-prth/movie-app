@@ -5,7 +5,7 @@ import 'package:movie_app/common/constants/size_constants.dart';
 import 'package:movie_app/common/constants/translation_constants.dart';
 import 'package:movie_app/common/extensions/size_extension.dart';
 import 'package:movie_app/common/extensions/string_extensions.dart';
-import 'package:movie_app/presentation/bloc/login/login_bloc.dart';
+import 'package:movie_app/presentation/bloc/login/login_cubit.dart';
 import 'package:movie_app/presentation/journeys/login/label_field_widget.dart';
 import 'package:movie_app/presentation/widgets/button.dart';
 import 'package:movie_app/presentation/themes/theme_text.dart';
@@ -76,7 +76,7 @@ class _LoginFormState extends State<LoginForm> {
               controller: _passwordController,
               isPasswordField: true,
             ),
-            BlocConsumer<LoginBloc, LoginState>(
+            BlocConsumer<LoginCubit, LoginState>(
               buildWhen: (previous, current) => current is LoginError,
               builder: (context, state) {
                 if (state is LoginError)
@@ -97,12 +97,8 @@ class _LoginFormState extends State<LoginForm> {
             Button(
               onPressed: enableSignIn
                   ? () {
-                      BlocProvider.of<LoginBloc>(context).add(
-                        LoginInitiateEvent(
-                          _userNameController.text,
-                          _passwordController.text,
-                        ),
-                      );
+                      BlocProvider.of<LoginCubit>(context).initiateLogin(
+                          _userNameController.text, _passwordController.text);
                     }
                   : null,
               text: TranslationConstants.signIn,

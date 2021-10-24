@@ -39,7 +39,7 @@ class MovieAppBar extends StatelessWidget {
                 showSearch(
                     context: context,
                     delegate: CustomSearchMovieDelegate(
-                      BlocProvider.of<SearchMovieBloc>(context),
+                      BlocProvider.of<SearchMovieCubit>(context),
                     ));
               },
               icon: Icon(

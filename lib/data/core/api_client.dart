@@ -10,8 +10,9 @@ class ApiClient {
   ApiClient(this._client);
 
   dynamic get(String path, {Map<dynamic, dynamic> params}) async {
+    await Future.delayed(Duration(milliseconds: 500));
     final response = await _client.get(
-      getPath(path, params),
+      Uri.parse(getPath(path, params)),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -26,7 +27,7 @@ class ApiClient {
 
   dynamic post(String path, {Map<dynamic, dynamic> params}) async {
     final response = await _client.post(
-      getPath(path, null),
+      Uri.parse(getPath(path, null)),
       body: jsonEncode(params),
       headers: {
         'Content-Type': 'application/json',

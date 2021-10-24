@@ -21,7 +21,7 @@ class WiredashApp extends StatelessWidget {
       navigatorKey: navigatorkey,
       child: child,
       options: WiredashOptionsData(
-        showDebugFloatingEntryPoint: false,
+        // showDebugFloatingEntryPoint: false,
         locale: Locale.fromSubtags(languageCode: languageCode),
       ),
       theme: WiredashThemeData(

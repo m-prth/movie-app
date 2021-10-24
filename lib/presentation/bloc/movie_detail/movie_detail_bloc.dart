@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
@@ -8,48 +6,44 @@ import 'package:movie_app/domain/entities/app_error.dart';
 import 'package:movie_app/domain/entities/movie_detail_entity.dart';
 import 'package:movie_app/domain/entities/movie_params.dart';
 import 'package:movie_app/domain/usecases/get_movie_detail.dart';
-import 'package:movie_app/presentation/bloc/cast/cast_bloc.dart';
-import 'package:movie_app/presentation/bloc/favorite/favorite_bloc.dart';
-import 'package:movie_app/presentation/bloc/loading/loading_bloc.dart';
-import 'package:movie_app/presentation/bloc/videos/videos_bloc.dart';
+import 'package:movie_app/presentation/bloc/cast/cast_cubit.dart';
+import 'package:movie_app/presentation/bloc/favorite/favorite_cubit.dart';
 
-part 'movie_detail_event.dart';
+import 'package:movie_app/presentation/bloc/loading/loading_cubit.dart';
+import 'package:movie_app/presentation/bloc/videos/videos_cubit.dart';
+
 part 'movie_detail_state.dart';
 
-class MovieDetailBloc extends Bloc<MovieDetailEvent, MovieDetailState> {
+class MovieDetailCubit extends Cubit<MovieDetailState> {
   final GetMovieDetail getMovieDetail;
-  final CastBloc castBloc;
-  final VideosBloc videosBloc;
-  final FavoriteBloc favoriteBloc;
-  final LoadingBloc loadingBloc;
+  final CastCubit castBloc;
+  final VideosCubit videosCubit;
+  final FavoriteCubit favoriteCubit;
+  final LoadingCubit loadingCubit;
 
-  MovieDetailBloc({
-    @required this.loadingBloc,
-    @required this.castBloc,
+  MovieDetailCubit({
     @required this.getMovieDetail,
-    @required this.videosBloc,
-    @required this.favoriteBloc,
+    @required this.castBloc,
+    @required this.videosCubit,
+    @required this.favoriteCubit,
+    @required this.loadingCubit,
   }) : super(MovieDetailInitial());
 
-  @override
-  Stream<MovieDetailState> mapEventToState(
-    MovieDetailEvent event,
-  ) async* {
-    if (event is MovieDetailLoadEvent) {
-      loadingBloc.add(StartLoading());
-      final Either<AppError, MovieDetailEntity> eitherResponse =
-          await getMovieDetail(
-        MovieParams(event.movieId),
-      );
-      yield eitherResponse.fold(
-        (l) => MovieDetailError(),
-        (r) => MovieDetailLoaded(r),
-      );
+  void loadMovieDetail(int movieId) async {
+    loadingCubit.show();
+    final Either<AppError, MovieDetailEntity> eitherResponse =
+        await getMovieDetail(
+      MovieParams(movieId),
+    );
 
-      favoriteBloc.add(CheckIfFavoriteMovieEvent(event.movieId));
-      castBloc.add(LoadCastEvent(movieId: event.movieId));
-      videosBloc.add(LoadVideosEvent(movieId: event.movieId));
-      loadingBloc.add(FinishLoading());
-    }
+    emit(eitherResponse.fold(
+      (l) => MovieDetailError(),
+      (r) => MovieDetailLoaded(r),
+    ));
+
+    favoriteCubit.checkIfMovieFavorite(MovieParams(movieId));
+    castBloc.loadCast(movieId);
+    videosCubit.loadVideos(movieId);
+    loadingCubit.hide();
   }
 }

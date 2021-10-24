@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/common/constants/size_constants.dart';
 import 'package:movie_app/common/screenutil/screen_util.dart';
 import 'package:movie_app/domain/entities/movie_entity.dart';
-import 'package:movie_app/presentation/bloc/movie_backdrop/movie_backdrop_bloc.dart';
+import 'package:movie_app/presentation/bloc/movie_backdrop/movie_backdrop_cubit.dart';
 
 import 'package:movie_app/common/extensions/size_extension.dart';
 
@@ -58,8 +58,8 @@ class _MoviePageViewState extends State<MoviePageView> {
         pageSnapping: true,
         itemCount: widget.movies?.length ?? 0,
         onPageChanged: (index) {
-          BlocProvider.of<MovieBackdropBloc>(context)
-              .add(MovieBackdropChangedEvent(widget.movies[index]));
+          BlocProvider.of<MovieBackdropCubit>(context)
+              .backdropChanged(widget.movies[index]);
         },
       ),
     );

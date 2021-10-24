@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/common/constants/translation_constants.dart';
 import 'package:movie_app/di/get_it_di.dart';
-import 'package:movie_app/presentation/bloc/favorite/favorite_bloc.dart';
+import 'package:movie_app/presentation/bloc/favorite/favorite_cubit.dart';
 import 'package:movie_app/common/extensions/string_extensions.dart';
 
 import 'favorite_movie_grid_view.dart';
@@ -13,19 +13,19 @@ class FavoriteScreen extends StatefulWidget {
 }
 
 class _FavoriteScreenState extends State<FavoriteScreen> {
-  FavoriteBloc _favoriteBloc;
+  FavoriteCubit _favoriteCubit;
 
   @override
   void initState() {
     super.initState();
-    _favoriteBloc = getItInstance<FavoriteBloc>();
-    _favoriteBloc.add(LoadFavoriteMovieEvent());
+    _favoriteCubit = getItInstance<FavoriteCubit>();
+    _favoriteCubit.loadFavoriteMovie();
   }
 
   @override
   void dispose() {
     super.dispose();
-    _favoriteBloc.close();
+    _favoriteCubit.close();
   }
 
   @override
@@ -35,8 +35,8 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
         title: Text(TranslationConstants.favoriteMovies.t(context)),
       ),
       body: BlocProvider.value(
-        value: _favoriteBloc,
-        child: BlocBuilder<FavoriteBloc, FavoriteState>(
+        value: _favoriteCubit,
+        child: BlocBuilder<FavoriteCubit, FavoriteState>(
           builder: (context, state) {
             if (state is FavoriteMoviesLoaded) {
               if (state.movies.isEmpty) {

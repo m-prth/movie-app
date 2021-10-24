@@ -11,9 +11,9 @@ import 'package:movie_app/presentation/widgets/app_error_widget.dart';
 import 'package:movie_app/common/extensions/string_extensions.dart';
 
 class CustomSearchMovieDelegate extends SearchDelegate {
-  final SearchMovieBloc searchMovieBloc;
+  final SearchMovieCubit searchMovieCubit;
 
-  CustomSearchMovieDelegate(this.searchMovieBloc);
+  CustomSearchMovieDelegate(this.searchMovieCubit);
 
   @override
   ThemeData appBarTheme(BuildContext context) {
@@ -51,18 +51,15 @@ class CustomSearchMovieDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    searchMovieBloc.add(
-      SearchTermChangedEvent(query),
-    );
+    searchMovieCubit.searchTermChanged(query);
 
-    return BlocBuilder<SearchMovieBloc, SearchMovieState>(
-      bloc: searchMovieBloc,
+    return BlocBuilder<SearchMovieCubit, SearchMovieState>(
+      cubit: searchMovieCubit,
       builder: (context, state) {
         if (state is SearchMovieError) {
           return AppErrorWidget(
             appErrorType: state.appErrorType,
-            onPressed: () =>
-                searchMovieBloc?.add(SearchTermChangedEvent(query)),
+            onPressed: () => searchMovieCubit?.searchTermChanged(query),
           );
         } else if (state is SearchMovieLoaded) {
           final movies = state.movies;

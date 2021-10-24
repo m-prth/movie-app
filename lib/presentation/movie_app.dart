@@ -5,9 +5,10 @@ import 'package:movie_app/common/constants/route_constants.dart';
 import 'package:movie_app/common/screenutil/screen_util.dart';
 import 'package:movie_app/di/get_it_di.dart';
 import 'package:movie_app/presentation/app_localizations.dart';
-import 'package:movie_app/presentation/bloc/language/language_bloc.dart';
-import 'package:movie_app/presentation/bloc/loading/loading_bloc.dart';
-import 'package:movie_app/presentation/bloc/login/login_bloc.dart';
+import 'package:movie_app/presentation/bloc/language/language_cubit.dart';
+import 'package:movie_app/presentation/bloc/loading/loading_cubit.dart';
+import 'package:movie_app/presentation/bloc/login/login_cubit.dart';
+import 'package:movie_app/presentation/bloc/theme/theme_cubit.dart';
 import 'package:movie_app/presentation/fade_page_route_builder.dart';
 import 'package:movie_app/presentation/journeys/loading/loading_screen.dart';
 
@@ -24,23 +25,27 @@ class MovieApp extends StatefulWidget {
 
 class _MovieAppState extends State<MovieApp> {
   final _navigatorKey = GlobalKey<NavigatorState>();
-  LanguageBloc _languageBloc;
-  LoginBloc _loginBloc;
-  LoadingBloc _loadingBloc;
+  LanguageCubit _languageCubit;
+  LoginCubit _loginCubit;
+  LoadingCubit _loadingCubit;
+  ThemeCubit _themeCubit;
   @override
   void initState() {
     super.initState();
-    _languageBloc = getItInstance<LanguageBloc>();
-    _languageBloc.add(LoadPreferredLanguageEvent());
-    _loginBloc = getItInstance<LoginBloc>();
-    _loadingBloc = getItInstance<LoadingBloc>();
+    _languageCubit = getItInstance<LanguageCubit>();
+    _languageCubit.loadPreferredLanguage();
+    _loginCubit = getItInstance<LoginCubit>();
+    _loadingCubit = getItInstance<LoadingCubit>();
+    _themeCubit = getItInstance<ThemeCubit>();
+    _themeCubit.loadPreferredTheme();
   }
 
   @override
   void dispose() {
-    _languageBloc?.close();
-    _loginBloc?.close();
-    _loadingBloc?.close();
+    _languageCubit?.close();
+    _loginCubit?.close();
+    _loadingCubit?.close();
+    _themeCubit?.close();
     super.dispose();
   }
 
@@ -49,22 +54,25 @@ class _MovieAppState extends State<MovieApp> {
     ScreenUtil.init();
     return MultiBlocProvider(
       providers: [
-        BlocProvider<LanguageBloc>.value(
-          value: _languageBloc,
+        BlocProvider<LanguageCubit>.value(
+          value: _languageCubit,
         ),
-        BlocProvider<LoginBloc>.value(
-          value: _loginBloc,
+        BlocProvider<LoginCubit>.value(
+          value: _loginCubit,
         ),
-        BlocProvider<LoadingBloc>.value(
-          value: _loadingBloc,
+        BlocProvider<LoadingCubit>.value(
+          value: _loadingCubit,
+        ),
+        BlocProvider<ThemeCubit>.value(
+          value: _themeCubit,
         ),
       ],
-      child: BlocBuilder<LanguageBloc, LanguageState>(
+      child: BlocBuilder<ThemeCubit, Themes>(
         builder: (context, state) {
-          if (state is LanguageLoaded) {
+          return BlocBuilder<LanguageCubit, Locale>(builder: (context, locale) {
             return WiredashApp(
               navigatorkey: _navigatorKey,
-              languageCode: state.locale.languageCode,
+              languageCode: locale.languageCode,
               child: MaterialApp(
                 navigatorKey: _navigatorKey,
                 debugShowCheckedModeBanner: false,
@@ -80,7 +88,7 @@ class _MovieAppState extends State<MovieApp> {
                 ),
                 supportedLocales:
                     Languages.languages.map((e) => Locale(e.code)).toList(),
-                locale: state.locale,
+                locale: locale,
                 localizationsDelegates: [
                   AppLocalizations.delegate,
                   GlobalMaterialLocalizations.delegate,
@@ -102,9 +110,7 @@ class _MovieAppState extends State<MovieApp> {
                 },
               ),
             );
-          } else {
-            return const SizedBox.shrink();
-          }
+          });
         },
       ),
     );

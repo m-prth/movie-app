@@ -6,12 +6,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/common/constants/size_constants.dart';
 import 'package:movie_app/common/screenutil/screen_util.dart';
 import 'package:movie_app/data/core/api_constants.dart';
-import 'package:movie_app/presentation/bloc/movie_backdrop/movie_backdrop_bloc.dart';
+import 'package:movie_app/domain/entities/movie_entity.dart';
+import 'package:movie_app/presentation/bloc/movie_backdrop/movie_backdrop_cubit.dart';
 import 'package:movie_app/common/extensions/size_extension.dart';
 
 class MovieBackdropWidget extends StatelessWidget {
-  const MovieBackdropWidget({Key key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return FractionallySizedBox(
@@ -22,20 +21,17 @@ class MovieBackdropWidget extends StatelessWidget {
           bottom: Radius.circular(Sizes.dimen_40.w),
         ),
         child: Stack(
-          children: [
+          children: <Widget>[
             FractionallySizedBox(
               heightFactor: 1,
               widthFactor: 1,
-              child: BlocBuilder<MovieBackdropBloc, MovieBackdropState>(
-                builder: (context, state) {
-                  if (state is MovieBackdropChanged) {
-                    return CachedNetworkImage(
-                      imageUrl:
-                          '${ApiConstants.BASE_IMAGE_URL}${state.movie.backdropPath}',
-                      fit: BoxFit.fitHeight,
-                    );
-                  }
-                  return SizedBox.shrink();
+              child: BlocBuilder<MovieBackdropCubit, MovieEntity>(
+                builder: (context, movie) {
+                  return CachedNetworkImage(
+                    imageUrl:
+                        '${ApiConstants.BASE_IMAGE_URL}${movie?.backdropPath}',
+                    fit: BoxFit.fitHeight,
+                  );
                 },
               ),
             ),
