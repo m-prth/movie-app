@@ -68,7 +68,7 @@ class _MovieAppState extends State<MovieApp> {
         ),
       ],
       child: BlocBuilder<ThemeCubit, Themes>(
-        builder: (context, state) {
+        builder: (context, theme) {
           return BlocBuilder<LanguageCubit, Locale>(builder: (context, locale) {
             return WiredashApp(
               navigatorkey: _navigatorKey,
@@ -78,13 +78,38 @@ class _MovieAppState extends State<MovieApp> {
                 debugShowCheckedModeBanner: false,
                 title: 'Movie App',
                 theme: ThemeData(
+                  brightness:
+                      theme == Themes.dark ? Brightness.dark : Brightness.light,
                   unselectedWidgetColor: AppColor.violet,
-                  primaryColor: AppColor.vulcan,
-                  accentColor: AppColor.royalBlue,
-                  scaffoldBackgroundColor: AppColor.vulcan,
+                  primaryColor:
+                      theme == Themes.dark ? AppColor.vulcan : Colors.white,
+                  accentColor:
+                      theme == Themes.dark ? AppColor.royalBlue : Colors.white,
+                  scaffoldBackgroundColor:
+                      theme == Themes.dark ? AppColor.vulcan : Colors.white,
                   visualDensity: VisualDensity.adaptivePlatformDensity,
-                  textTheme: ThemeText.getTextTheme(),
+                  cardTheme: CardTheme(
+                      color: theme == Themes.dark
+                          ? Colors.white
+                          : AppColor.vulcan),
+                  textTheme: theme == Themes.dark
+                      ? ThemeText.getTextTheme()
+                      : ThemeText.getLightTextTheme(),
                   appBarTheme: AppBarTheme(elevation: 0),
+                  inputDecorationTheme: InputDecorationTheme(
+                    hintStyle: Theme.of(context).textTheme.greySubtitle1,
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: theme == Themes.dark
+                            ? Colors.white
+                            : AppColor.vulcan,
+                      ),
+                    ),
+                    enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                      color: Colors.grey,
+                    )),
+                  ),
                 ),
                 supportedLocales:
                     Languages.languages.map((e) => Locale(e.code)).toList(),

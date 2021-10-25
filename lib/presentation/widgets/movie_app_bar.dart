@@ -6,7 +6,9 @@ import 'package:movie_app/common/constants/size_constants.dart';
 import 'package:movie_app/common/screenutil/screen_util.dart';
 import 'package:movie_app/common/extensions/size_extension.dart';
 import 'package:movie_app/presentation/bloc/search_movie/search_movie_bloc.dart';
+import 'package:movie_app/presentation/bloc/theme/theme_cubit.dart';
 import 'package:movie_app/presentation/journeys/search_movie/custom_search_movie_delegate.dart';
+import 'package:movie_app/presentation/themes/app_color.dart';
 import 'package:movie_app/presentation/widgets/logo.dart';
 
 class MovieAppBar extends StatelessWidget {
@@ -44,7 +46,9 @@ class MovieAppBar extends StatelessWidget {
               },
               icon: Icon(
                 Icons.search,
-                color: Colors.white,
+                color: context.read<ThemeCubit>().state == Themes.dark
+                    ? Colors.white
+                    : AppColor.vulcan,
                 size: Sizes.dimen_12.h,
               ))
         ],

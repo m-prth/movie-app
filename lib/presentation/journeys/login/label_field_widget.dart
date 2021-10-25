@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/common/constants/size_constants.dart';
-import 'package:movie_app/presentation/themes/theme_text.dart';
 import 'package:movie_app/common/extensions/size_extension.dart';
 
 class LabelFieldWidget extends StatelessWidget {
@@ -8,15 +7,6 @@ class LabelFieldWidget extends StatelessWidget {
   final String hintText;
   final bool isPasswordField;
   final TextEditingController controller;
-  final UnderlineInputBorder _enabledBorder = const UnderlineInputBorder(
-      borderSide: BorderSide(
-    color: Colors.grey,
-  ));
-  final UnderlineInputBorder _focusedBorder = const UnderlineInputBorder(
-    borderSide: BorderSide(
-      color: Colors.white,
-    ),
-  );
 
   const LabelFieldWidget({
     Key key,
@@ -44,9 +34,6 @@ class LabelFieldWidget extends StatelessWidget {
             controller: controller,
             decoration: InputDecoration(
               hintText: hintText,
-              hintStyle: Theme.of(context).textTheme.greySubtitle1,
-              focusedBorder: _focusedBorder,
-              enabledBorder: _enabledBorder,
             ),
           ),
         ],

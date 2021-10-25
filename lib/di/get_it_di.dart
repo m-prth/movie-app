@@ -46,125 +46,89 @@ import 'package:movie_app/presentation/bloc/videos/videos_cubit.dart';
 final getItInstance = GetIt.I;
 
 Future init() async {
-  // ! clients
   getItInstance.registerLazySingleton<Client>(() => Client());
+
   getItInstance
       .registerLazySingleton<ApiClient>(() => ApiClient(getItInstance()));
 
-  // ! datasources
   getItInstance.registerLazySingleton<MovieRemoteDataSource>(
       () => MovieRemoteDataSourceImpl(getItInstance()));
+
   getItInstance.registerLazySingleton<MovieLocalDataSource>(
       () => MovieLocalDataSourceImpl());
+
   getItInstance.registerLazySingleton<LanguageLocalDataSource>(
       () => LanguageLocalDataSourceImpl());
+
   getItInstance.registerLazySingleton<AuthenticationRemoteDataSource>(
       () => AuthenticationRemoteDataSourceImpl(getItInstance()));
+
   getItInstance.registerLazySingleton<AuthenticationLocalDataSource>(
       () => AuthenticationLocalDataSourceImpl());
-  // ! usecases
+
   getItInstance
       .registerLazySingleton<GetTrending>(() => GetTrending(getItInstance()));
-  getItInstance.registerLazySingleton<GetPlayingNow>(
-      () => GetPlayingNow(getItInstance()));
   getItInstance
       .registerLazySingleton<GetPopular>(() => GetPopular(getItInstance()));
+  getItInstance.registerLazySingleton<GetPlayingNow>(
+      () => GetPlayingNow(getItInstance()));
   getItInstance.registerLazySingleton<GetComingSoon>(
       () => GetComingSoon(getItInstance()));
 
   getItInstance.registerLazySingleton<GetMovieDetail>(
       () => GetMovieDetail(getItInstance()));
+
   getItInstance
       .registerLazySingleton<GetCastCrew>(() => GetCastCrew(getItInstance()));
-  getItInstance
-      .registerLazySingleton<GetVideos>(() => GetVideos(getItInstance()));
+
   getItInstance
       .registerLazySingleton<SearchMovies>(() => SearchMovies(getItInstance()));
+
+  getItInstance
+      .registerLazySingleton<GetVideos>(() => GetVideos(getItInstance()));
+
   getItInstance
       .registerLazySingleton<SaveMovie>(() => SaveMovie(getItInstance()));
+
   getItInstance.registerLazySingleton<GetFavoriteMovies>(
       () => GetFavoriteMovies(getItInstance()));
+
   getItInstance.registerLazySingleton<DeleteFavoriteMovies>(
       () => DeleteFavoriteMovies(getItInstance()));
+
   getItInstance.registerLazySingleton<CheckIfMovieFavorite>(
       () => CheckIfMovieFavorite(getItInstance()));
+
   getItInstance.registerLazySingleton<UpdateLanguage>(
       () => UpdateLanguage(getItInstance()));
+
   getItInstance.registerLazySingleton<GetPreferredLanguage>(
       () => GetPreferredLanguage(getItInstance()));
+
   getItInstance
       .registerLazySingleton<UpdateTheme>(() => UpdateTheme(getItInstance()));
 
   getItInstance.registerLazySingleton<GetPreferredTheme>(
       () => GetPreferredTheme(getItInstance()));
+
   getItInstance
       .registerLazySingleton<LoginUser>(() => LoginUser(getItInstance()));
+
   getItInstance
       .registerLazySingleton<LogoutUser>(() => LogoutUser(getItInstance()));
-  // ! repository
-  getItInstance.registerLazySingleton<MovieRepository>(
-      () => MovieRepositoryImpl(getItInstance(), getItInstance()));
-  getItInstance.registerLazySingleton<AppRepository>(
-      () => AppRepositoryImpl(getItInstance()));
+
+  getItInstance
+      .registerLazySingleton<MovieRepository>(() => MovieRepositoryImpl(
+            getItInstance(),
+            getItInstance(),
+          ));
+
+  getItInstance.registerLazySingleton<AppRepository>(() => AppRepositoryImpl(
+        getItInstance(),
+      ));
+
   getItInstance.registerLazySingleton<AuthenticationRepository>(
       () => AuthenticationRepositoryImpl(getItInstance(), getItInstance()));
-
-  // ! blocs
-  getItInstance.registerFactory(() => MovieCarouselCubit(
-        loadingCubit: getItInstance(),
-        getTrending: getItInstance(),
-        movieBackdropCubit: getItInstance(),
-      ));
-  getItInstance.registerFactory(() => MovieBackdropCubit());
-  getItInstance.registerFactory(() => MovieTabbedCubit(
-        getComingSoon: getItInstance(),
-        getPlayingNow: getItInstance(),
-        getPopular: getItInstance(),
-      ));
-  getItInstance.registerFactory(() => MovieDetailCubit(
-        loadingCubit: getItInstance(),
-        favoriteCubit: getItInstance(),
-        getMovieDetail: getItInstance(),
-        castBloc: getItInstance(),
-        videosCubit: getItInstance(),
-      ));
-  getItInstance.registerFactory(
-    () => CastCubit(
-      getCastCrew: getItInstance(),
-    ),
-  );
-
-  getItInstance.registerFactory(
-    () => SearchMovieCubit(
-      loadingCubit: getItInstance(),
-      searchMovies: getItInstance(),
-    ),
-  );
-
-  getItInstance.registerFactory(
-    () => FavoriteCubit(
-      saveMovie: getItInstance(),
-      getFavoriteMovies: getItInstance(),
-      deleteFavoriteMovie: getItInstance(),
-      checkIfMovieFavorite: getItInstance(),
-    ),
-  );
-  getItInstance.registerFactory(
-    () => LoginCubit(
-      loginUser: getItInstance(),
-      logoutUser: getItInstance(),
-      loadingCubit: getItInstance(),
-    ),
-  );
-  getItInstance.registerSingleton<LoadingCubit>(LoadingCubit());
-
-  // ! internalionalization
-  getItInstance.registerSingleton<LanguageCubit>(
-    LanguageCubit(
-      getPreferredLanguage: getItInstance(),
-      updateLanguage: getItInstance(),
-    ),
-  );
 
   getItInstance.registerFactory(() => MovieBackdropCubit());
 
@@ -230,10 +194,10 @@ Future init() async {
         logoutUser: getItInstance(),
         loadingCubit: getItInstance(),
       ));
+
+  getItInstance.registerSingleton<LoadingCubit>(LoadingCubit());
   getItInstance.registerSingleton<ThemeCubit>(ThemeCubit(
     getPrefferedTheme: getItInstance(),
     updateTheme: getItInstance(),
   ));
-
-  getItInstance.registerSingleton<LoadingCubit>(LoadingCubit());
 }
