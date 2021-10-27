@@ -74,7 +74,6 @@ class _MovieAppState extends State<MovieApp> {
                     unselectedWidgetColor: AppColor.royalBlue,
                     primaryColor:
                         theme == Themes.dark ? AppColor.vulcan : Colors.white,
-                    accentColor: AppColor.royalBlue,
                     scaffoldBackgroundColor:
                         theme == Themes.dark ? AppColor.vulcan : Colors.white,
                     brightness: theme == Themes.dark
@@ -101,6 +100,8 @@ class _MovieAppState extends State<MovieApp> {
                       enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.grey)),
                     ),
+                    colorScheme: ColorScheme.fromSwatch()
+                        .copyWith(secondary: AppColor.royalBlue),
                   ),
                   supportedLocales:
                       Languages.languages.map((e) => Locale(e.code)).toList(),
