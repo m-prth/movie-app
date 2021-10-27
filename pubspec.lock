@@ -318,7 +318,7 @@ packages:
       name: flutter_svg
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.23.0+1"
+    version: "0.22.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -342,7 +342,7 @@ packages:
       name: get_it
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "7.2.0"
+    version: "6.1.1"
   glob:
     dependency: transitive
     description:
@@ -886,7 +886,7 @@ packages:
       name: wiredash
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.7.0+1"
+    version: "0.6.2"
   xdg_directories:
     dependency: transitive
     description:
