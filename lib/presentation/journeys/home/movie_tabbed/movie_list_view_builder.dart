@@ -6,8 +6,10 @@ import 'package:movie_app/presentation/journeys/home/movie_tabbed/movie_tabbed_c
 class MovieListViewBuilder extends StatelessWidget {
   final List<MovieEntity> movies;
 
-  const MovieListViewBuilder({Key key, @required this.movies})
-      : super(key: key);
+  const MovieListViewBuilder({
+    Key? key,
+    required this.movies,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(

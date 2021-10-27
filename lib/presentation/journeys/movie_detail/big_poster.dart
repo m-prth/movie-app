@@ -15,8 +15,8 @@ class BigPoster extends StatelessWidget {
   final MovieDetailEntity movie;
 
   const BigPoster({
-    Key key,
-    @required this.movie,
+    Key? key,
+    required this.movie,
   }) : super(key: key);
 
   @override
@@ -49,7 +49,7 @@ class BigPoster extends StatelessWidget {
               style: Theme.of(context).textTheme.headline5,
             ),
             subtitle: Text(
-              movie.releaseDate,
+              movie.releaseDate ?? "",
               style: Theme.of(context).textTheme.greySubtitle1,
             ),
             trailing: Text(

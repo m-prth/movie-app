@@ -14,9 +14,9 @@ class MovieTable extends MovieEntity {
   final String posterPath;
 
   MovieTable({
-    this.id,
-    this.title,
-    this.posterPath,
+    required this.id,
+    required this.title,
+    required this.posterPath,
   }) : super(
           id: id,
           releaseDate: '',

@@ -56,11 +56,11 @@ class _MovieTabbedWidgetState extends State<MovieTabbedWidget>
               ],
             ),
             if (state is MovieTabChanged)
-              state.movies?.isEmpty ?? true
+              state.movies.isEmpty
                   ? Expanded(
                       child: Center(
                           child: Text(
-                        TranslationConstants.noMovies.t(context),
+                        TranslationConstants.noMovies.t(context) ?? "No Movies",
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.subtitle1,
                       )),

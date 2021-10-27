@@ -9,10 +9,10 @@ class NavigationExpandedListItem extends StatelessWidget {
   final List<String> children;
 
   const NavigationExpandedListItem({
-    Key key,
-    @required this.title,
-    @required this.onPressed,
-    @required this.children,
+    Key? key,
+    required this.title,
+    required this.onPressed,
+    required this.children,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -44,12 +44,12 @@ class NavigationExpandedListItem extends StatelessWidget {
 
 class NavigationSubListItem extends StatelessWidget {
   final String title;
-  final Function onPressed;
+  final Function()? onPressed;
 
   const NavigationSubListItem({
-    Key key,
-    @required this.title,
-    @required this.onPressed,
+    Key? key,
+    required this.title,
+    required this.onPressed,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {

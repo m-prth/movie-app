@@ -7,9 +7,10 @@ import 'package:movie_app/presentation/themes/app_color.dart';
 class Logo extends StatelessWidget {
   final double height;
 
-  const Logo({Key key, @required this.height})
-      : assert(height != null, "height must not be null"),
-        assert(height > 0, 'Height should be greater than 0');
+  const Logo({
+    Key? key,
+    required this.height,
+  });
 
   @override
   Widget build(BuildContext context) {

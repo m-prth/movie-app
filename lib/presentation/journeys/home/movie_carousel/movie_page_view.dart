@@ -13,8 +13,11 @@ class MoviePageView extends StatefulWidget {
   final List<MovieEntity> movies;
   final int initialPage;
 
-  MoviePageView({Key key, this.movies, this.initialPage})
-      : assert(initialPage >= 0, 'initial page cannot be less than 0'),
+  MoviePageView({
+    Key? key,
+    required this.movies,
+    required this.initialPage,
+  })  : assert(initialPage >= 0, 'initial page cannot be less than 0'),
         super(key: key);
 
   @override
@@ -22,7 +25,7 @@ class MoviePageView extends StatefulWidget {
 }
 
 class _MoviePageViewState extends State<MoviePageView> {
-  PageController _pageController;
+  PageController? _pageController;
 
   @override
   void initState() {
@@ -36,7 +39,7 @@ class _MoviePageViewState extends State<MoviePageView> {
 
   @override
   void dispose() {
-    _pageController.dispose();
+    _pageController!.dispose();
     super.dispose();
   }
 
@@ -51,12 +54,12 @@ class _MoviePageViewState extends State<MoviePageView> {
           final MovieEntity movie = widget.movies[index];
           return AnimatedMovieCardWidget(
               index: index,
-              pageController: _pageController,
+              pageController: _pageController!,
               movieId: movie.id,
               posterPath: movie.posterPath);
         },
         pageSnapping: true,
-        itemCount: widget.movies?.length ?? 0,
+        itemCount: widget.movies.length,
         onPageChanged: (index) {
           BlocProvider.of<MovieBackdropCubit>(context)
               .backdropChanged(widget.movies[index]);

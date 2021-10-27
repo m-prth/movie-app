@@ -1,6 +1,4 @@
 import 'package:bloc/bloc.dart';
-
-import 'package:flutter/foundation.dart';
 import 'package:movie_app/domain/entities/no_params.dart';
 import 'package:movie_app/domain/usecases/get_preffered_theme.dart';
 import 'package:movie_app/domain/usecases/update_theme.dart';
@@ -8,12 +6,12 @@ import 'package:movie_app/domain/usecases/update_theme.dart';
 enum Themes { light, dark }
 
 class ThemeCubit extends Cubit<Themes> {
-  final GetPreferredTheme getPrefferedTheme;
+  final GetPreferredTheme getPreferredTheme;
   final UpdateTheme updateTheme;
 
   ThemeCubit({
-    @required this.getPrefferedTheme,
-    @required this.updateTheme,
+    required this.getPreferredTheme,
+    required this.updateTheme,
   }) : super(Themes.dark);
 
   Future<void> toggleTheme() async {
@@ -22,7 +20,7 @@ class ThemeCubit extends Cubit<Themes> {
   }
 
   void loadPreferredTheme() async {
-    final response = await getPrefferedTheme(NoParams());
+    final response = await getPreferredTheme(NoParams());
     emit(
       response.fold(
         (l) => Themes.dark,

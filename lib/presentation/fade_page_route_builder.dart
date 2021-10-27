@@ -5,8 +5,8 @@ class FadePageRouteBuilder<T> extends PageRouteBuilder<T> {
   final RouteSettings settings;
 
   FadePageRouteBuilder({
-    @required this.builder,
-    @required this.settings,
+    required this.builder,
+    required this.settings,
   }) : super(
           pageBuilder: (context, animation, secondaryAnimation) =>
               builder(context),
@@ -18,7 +18,8 @@ class FadePageRouteBuilder<T> extends PageRouteBuilder<T> {
               opacity: animation.drive(tween),
               child: child,
             );
-          },transitionDuration: const Duration(milliseconds: 500),
-    settings: settings,
+          },
+          transitionDuration: const Duration(milliseconds: 500),
+          settings: settings,
         );
 }

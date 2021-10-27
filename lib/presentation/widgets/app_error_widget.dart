@@ -11,12 +11,12 @@ import 'package:wiredash/wiredash.dart';
 
 class AppErrorWidget extends StatelessWidget {
   final AppErrorType appErrorType;
-  final Function onPressed;
+  final Function()? onPressed;
 
   const AppErrorWidget({
-    Key key,
-    @required this.appErrorType,
-    @required this.onPressed,
+    Key? key,
+    required this.appErrorType,
+    required this.onPressed,
   }) : super(key: key);
 
   @override
@@ -29,8 +29,8 @@ class AppErrorWidget extends StatelessWidget {
         children: [
           Text(
             appErrorType == AppErrorType.api
-                ? TranslationConstants.somethingWentWrong.t(context)
-                : TranslationConstants.checkNetwork.t(context),
+                ? TranslationConstants.somethingWentWrong.t(context) ?? ""
+                : TranslationConstants.checkNetwork.t(context) ?? "",
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.subtitle1,
           ),
@@ -41,7 +41,7 @@ class AppErrorWidget extends StatelessWidget {
                 text: TranslationConstants.retry,
               ),
               Button(
-                onPressed: () => Wiredash.of(context).show(),
+                onPressed: () => Wiredash.of(context)!.show(),
                 text: TranslationConstants.feedback,
               ),
             ],

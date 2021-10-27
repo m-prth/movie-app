@@ -197,7 +197,7 @@ Future init() async {
 
   getItInstance.registerSingleton<LoadingCubit>(LoadingCubit());
   getItInstance.registerSingleton<ThemeCubit>(ThemeCubit(
-    getPrefferedTheme: getItInstance(),
+    getPreferredTheme: getItInstance(),
     updateTheme: getItInstance(),
   ));
 }

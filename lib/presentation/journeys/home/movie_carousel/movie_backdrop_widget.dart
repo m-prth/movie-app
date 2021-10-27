@@ -25,7 +25,7 @@ class MovieBackdropWidget extends StatelessWidget {
             FractionallySizedBox(
               heightFactor: 1,
               widthFactor: 1,
-              child: BlocBuilder<MovieBackdropCubit, MovieEntity>(
+              child: BlocBuilder<MovieBackdropCubit, MovieEntity?>(
                 builder: (context, movie) {
                   return CachedNetworkImage(
                     imageUrl:

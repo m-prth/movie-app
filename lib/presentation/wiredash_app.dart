@@ -8,10 +8,10 @@ class WiredashApp extends StatelessWidget {
   final String languageCode;
 
   const WiredashApp({
-    Key key,
-    @required this.navigatorkey,
-    @required this.child,
-    @required this.languageCode,
+    Key? key,
+    required this.navigatorkey,
+    required this.child,
+    required this.languageCode,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {

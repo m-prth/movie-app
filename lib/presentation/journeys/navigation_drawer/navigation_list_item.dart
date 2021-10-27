@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 class NavigationListItem extends StatelessWidget {
   final String title;
-  final Function onPressed;
+  final Function()? onPressed;
 
   const NavigationListItem({
-    Key key,
-    @required this.title,
-    @required this.onPressed,
+    Key? key,
+    required this.title,
+    required this.onPressed,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {

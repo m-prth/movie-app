@@ -9,11 +9,11 @@ class LabelFieldWidget extends StatelessWidget {
   final TextEditingController controller;
 
   const LabelFieldWidget({
-    Key key,
-    @required this.label,
-    @required this.hintText,
+    Key? key,
+    required this.label,
+    required this.hintText,
     this.isPasswordField = false,
-    @required this.controller,
+    required this.controller,
   }) : super(key: key);
 
   @override

@@ -16,7 +16,7 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  TextEditingController _userNameController, _passwordController;
+  late TextEditingController _userNameController, _passwordController;
   bool enableSignIn = false;
 
   @override
@@ -41,8 +41,8 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   void dispose() {
-    _userNameController?.dispose();
-    _passwordController?.dispose();
+    _userNameController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 
@@ -60,19 +60,19 @@ class _LoginFormState extends State<LoginForm> {
             Padding(
               padding: EdgeInsets.only(bottom: Sizes.dimen_8.h),
               child: Text(
-                TranslationConstants.loginToMovieApp.t(context),
+                TranslationConstants.loginToMovieApp.t(context) ?? "",
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.headline5,
               ),
             ),
             LabelFieldWidget(
-              label: TranslationConstants.username.t(context),
-              hintText: TranslationConstants.enterTMDbUsername.t(context),
+              label: TranslationConstants.username.t(context) ?? "",
+              hintText: TranslationConstants.enterTMDbUsername.t(context) ?? "",
               controller: _userNameController,
             ),
             LabelFieldWidget(
-              label: TranslationConstants.password.t(context),
-              hintText: TranslationConstants.enterPassword.t(context),
+              label: TranslationConstants.password.t(context) ?? "",
+              hintText: TranslationConstants.enterPassword.t(context) ?? "",
               controller: _passwordController,
               isPasswordField: true,
             ),
@@ -81,7 +81,7 @@ class _LoginFormState extends State<LoginForm> {
               builder: (context, state) {
                 if (state is LoginError)
                   return Text(
-                    state.message.t(context),
+                    state.message.t(context) ?? "",
                     style: Theme.of(context).textTheme.orangeSubtitle1,
                   );
                 return const SizedBox.shrink();

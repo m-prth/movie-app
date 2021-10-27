@@ -6,7 +6,11 @@ class CastEntity extends Equatable {
   final String posterPath;
   final String character;
 
-  CastEntity({this.creditId, this.name, this.posterPath, this.character});
+  CastEntity(
+      {required this.creditId,
+      required this.name,
+      required this.posterPath,
+      required this.character});
 
   @override
   List<Object> get props => [creditId];

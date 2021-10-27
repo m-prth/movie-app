@@ -9,18 +9,15 @@ import 'package:movie_app/common/extensions/string_extensions.dart';
 
 class TabTitleWidget extends StatelessWidget {
   final String title;
-  final Function onTap;
+  final Function()? onTap;
   final bool isSelected;
 
   const TabTitleWidget(
-      {Key key,
-      @required this.title,
-      @required this.onTap,
+      {Key? key,
+      required this.title,
+      required this.onTap,
       this.isSelected = false})
-      : assert(title != null, 'title cannot be null'),
-        assert(onTap != null, 'onTap cannot be null'),
-        assert(isSelected != null, 'isSelected cannot be null'),
-        super(key: key);
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -30,12 +27,13 @@ class TabTitleWidget extends StatelessWidget {
           color: Colors.transparent,
           border: Border(
             bottom: BorderSide(
-                color: isSelected ? AppColor.royalBlue : Colors.transparent,
-                width: Sizes.dimen_1.h),
+              color: isSelected ? AppColor.royalBlue : Colors.transparent,
+              width: Sizes.dimen_1.h,
+            ),
           ),
         ),
         child: Text(
-          title.t(context),
+          title.t(context) ?? "",
           style: isSelected
               ? Theme.of(context).textTheme.royalBlueSubtitle1
               : Theme.of(context).textTheme.subtitle1,

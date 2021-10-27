@@ -13,45 +13,50 @@ class FavoriteScreen extends StatefulWidget {
 }
 
 class _FavoriteScreenState extends State<FavoriteScreen> {
-  FavoriteCubit _favoriteCubit;
+  late FavoriteCubit _favoriteBloc;
 
   @override
   void initState() {
     super.initState();
-    _favoriteCubit = getItInstance<FavoriteCubit>();
-    _favoriteCubit.loadFavoriteMovie();
+    _favoriteBloc = getItInstance<FavoriteCubit>();
+    _favoriteBloc.loadFavoriteMovie();
   }
 
   @override
   void dispose() {
+    _favoriteBloc.close();
     super.dispose();
-    _favoriteCubit.close();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(TranslationConstants.favoriteMovies.t(context)),
+        title: Text(
+          TranslationConstants.favoriteMovies.t(context) ?? "Favorite Movies",
+        ),
       ),
       body: BlocProvider.value(
-        value: _favoriteCubit,
+        value: _favoriteBloc,
         child: BlocBuilder<FavoriteCubit, FavoriteState>(
           builder: (context, state) {
             if (state is FavoriteMoviesLoaded) {
               if (state.movies.isEmpty) {
                 return Center(
                   child: Text(
-                    TranslationConstants.noFavoriteMovies.t(context),
+                    TranslationConstants.noFavoriteMovie.t(context) ??
+                        "No Favorite Movie",
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.subtitle1,
                   ),
                 );
               }
-              return FavoriteMovieGridView(movies: state.movies);
-            } else {
-              return SizedBox.shrink();
+              return FavoriteMovieGridView(
+                movies: state.movies,
+              );
             }
+
+            return const SizedBox.shrink();
           },
         ),
       ),

@@ -6,14 +6,15 @@ import 'package:movie_app/data/core/api_constants.dart';
 import 'package:movie_app/common/extensions/size_extension.dart';
 import 'package:movie_app/presentation/journeys/movie_detail/movie_detail_arguement.dart';
 
-
 class MovieCardWidget extends StatelessWidget {
   final int movieId;
   final String posterPath;
 
-  const MovieCardWidget(
-      {Key key, @required this.movieId, @required this.posterPath})
-      : super(key: key);
+  const MovieCardWidget({
+    Key? key,
+    required this.movieId,
+    required this.posterPath,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -10,16 +10,18 @@ import 'package:movie_app/common/extensions/size_extension.dart';
 
 class WatchVideoScreen extends StatefulWidget {
   final WatchVideoArguements watchVideoArguements;
-  const WatchVideoScreen({Key key, @required this.watchVideoArguements})
-      : super(key: key);
+  const WatchVideoScreen({
+    Key? key,
+    required this.watchVideoArguements,
+  }) : super(key: key);
 
   @override
   _WatchVideoScreenState createState() => _WatchVideoScreenState();
 }
 
 class _WatchVideoScreenState extends State<WatchVideoScreen> {
-  List<VideoEntity> _videos;
-  YoutubePlayerController _controller;
+  late List<VideoEntity> _videos;
+  late YoutubePlayerController _controller;
 
   @override
   void initState() {
@@ -40,7 +42,7 @@ class _WatchVideoScreenState extends State<WatchVideoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(TranslationConstants.watchTrailer.t(context)),
+        title: Text(TranslationConstants.watchTrailers.t(context) ?? ""),
       ),
       body: YoutubePlayerBuilder(
         builder: (context, player) {

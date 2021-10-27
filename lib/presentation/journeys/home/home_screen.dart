@@ -17,28 +17,28 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  MovieCarouselCubit movieCarouselCubit;
-  MovieBackdropCubit movieBackdropBloc;
-  MovieTabbedCubit movieTabbedCubit;
-  SearchMovieCubit searchMovieBloc;
+  late MovieCarouselCubit movieCarouselCubit;
+  late MovieBackdropCubit movieBackdropCubit;
+  late MovieTabbedCubit movieTabbedCubit;
+  late SearchMovieCubit searchMovieCubit;
 
   @override
   void initState() {
     super.initState();
     movieCarouselCubit = getItInstance<MovieCarouselCubit>();
-    movieBackdropBloc = movieCarouselCubit.movieBackdropCubit;
+    movieBackdropCubit = movieCarouselCubit.movieBackdropCubit;
     movieTabbedCubit = getItInstance<MovieTabbedCubit>();
     movieCarouselCubit.loadCarousel();
-    searchMovieBloc = getItInstance<SearchMovieCubit>();
+    searchMovieCubit = getItInstance<SearchMovieCubit>();
   }
 
   @override
   void dispose() {
     super.dispose();
-    movieCarouselCubit?.close();
-    movieBackdropBloc?.close();
-    movieTabbedCubit?.close();
-    searchMovieBloc?.close();
+    movieCarouselCubit.close();
+    movieBackdropCubit.close();
+    movieTabbedCubit.close();
+    searchMovieCubit.close();
   }
 
   @override
@@ -49,13 +49,13 @@ class _HomeScreenState extends State<HomeScreen> {
           create: (context) => movieCarouselCubit,
         ),
         BlocProvider(
-          create: (context) => movieBackdropBloc,
+          create: (context) => movieBackdropCubit,
         ),
         BlocProvider(
           create: (context) => movieTabbedCubit,
         ),
         BlocProvider(
-          create: (context) => searchMovieBloc,
+          create: (context) => searchMovieCubit,
         )
       ],
       child: Scaffold(

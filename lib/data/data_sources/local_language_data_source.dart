@@ -2,7 +2,7 @@ import 'package:hive/hive.dart';
 import 'package:pedantic/pedantic.dart';
 
 abstract class LanguageLocalDataSource {
-  Future<void> updateLanguage(String language);
+  Future<void> updateLanguage(String languageCode);
   Future<String> getPreferredLanguage();
   Future<void> updateTheme(String themeName);
   Future<String> getPreferredTheme();
@@ -12,7 +12,7 @@ class LanguageLocalDataSourceImpl extends LanguageLocalDataSource {
   @override
   Future<String> getPreferredLanguage() async {
     final languageBox = await Hive.openBox('languageBox');
-    return languageBox.get('preferred_language');
+    return languageBox.get('preferred_language') ?? 'en';
   }
 
   @override

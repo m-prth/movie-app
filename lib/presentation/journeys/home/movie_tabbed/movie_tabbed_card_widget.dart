@@ -7,16 +7,15 @@ import 'package:movie_app/data/core/api_constants.dart';
 import 'package:movie_app/common/extensions/string_extensions.dart';
 import 'package:movie_app/presentation/journeys/movie_detail/movie_detail_arguement.dart';
 
-
 class MovieTabbedCardWidget extends StatelessWidget {
   final int movieId;
   final String title, posterPath;
 
   const MovieTabbedCardWidget(
-      {Key key,
-      @required this.movieId,
-      @required this.title,
-      @required this.posterPath})
+      {Key? key,
+      required this.movieId,
+      required this.title,
+      required this.posterPath})
       : super(key: key);
 
   @override

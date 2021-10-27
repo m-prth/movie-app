@@ -17,28 +17,29 @@ import 'package:movie_app/presentation/journeys/movie_detail/videos_widget.dart'
 class MovieDetailScreen extends StatefulWidget {
   final MovieDetailArguements movieDetailArguements;
 
-  const MovieDetailScreen({Key key, @required this.movieDetailArguements})
-      : assert(movieDetailArguements != null, "arguements must not be null"),
-        super(key: key);
+  const MovieDetailScreen({
+    Key? key,
+    required this.movieDetailArguements,
+  }) : super(key: key);
 
   @override
   _MovieDetailScreenState createState() => _MovieDetailScreenState();
 }
 
 class _MovieDetailScreenState extends State<MovieDetailScreen> {
-  MovieDetailCubit _movieDetailCubit;
-  CastCubit _castCubit;
-  VideosCubit _videosCubit;
-  FavoriteCubit _favoriteCubit;
+  MovieDetailCubit? _movieDetailCubit;
+  CastCubit? _castCubit;
+  VideosCubit? _videosCubit;
+  FavoriteCubit? _favoriteCubit;
 
   @override
   void initState() {
     super.initState();
     _movieDetailCubit = getItInstance<MovieDetailCubit>();
-    _castCubit = _movieDetailCubit.castBloc;
-    _videosCubit = _movieDetailCubit.videosCubit;
-    _favoriteCubit = _movieDetailCubit.favoriteCubit;
-    _movieDetailCubit.loadMovieDetail(widget.movieDetailArguements.movieId);
+    _castCubit = _movieDetailCubit!.castBloc;
+    _videosCubit = _movieDetailCubit!.videosCubit;
+    _favoriteCubit = _movieDetailCubit!.favoriteCubit;
+    _movieDetailCubit!.loadMovieDetail(widget.movieDetailArguements.movieId);
   }
 
   @override
@@ -55,10 +56,10 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
     return Scaffold(
       body: MultiBlocProvider(
         providers: [
-          BlocProvider.value(value: _movieDetailCubit),
-          BlocProvider.value(value: _castCubit),
-          BlocProvider.value(value: _videosCubit),
-          BlocProvider.value(value: _favoriteCubit),
+          BlocProvider.value(value: _movieDetailCubit!),
+          BlocProvider.value(value: _castCubit!),
+          BlocProvider.value(value: _videosCubit!),
+          BlocProvider.value(value: _favoriteCubit!),
         ],
         child: BlocBuilder<MovieDetailCubit, MovieDetailState>(
           builder: (context, state) {
@@ -78,7 +79,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                         vertical: Sizes.dimen_8.h,
                       ),
                       child: Text(
-                        movieDetail.overview,
+                        movieDetail.overview!,
                         style: Theme.of(context).textTheme.bodyText2,
                       ),
                     ),
@@ -86,12 +87,12 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                       padding:
                           EdgeInsets.symmetric(horizontal: Sizes.dimen_16.w),
                       child: Text(
-                        TranslationConstants.cast.t(context),
+                        TranslationConstants.cast.t(context)!,
                         style: Theme.of(context).textTheme.headline6,
                       ),
                     ),
                     CastWidget(),
-                    VideosWidget(videosCubit: _videosCubit),
+                    VideosWidget(videosCubit: _videosCubit!),
                   ],
                 ),
               );

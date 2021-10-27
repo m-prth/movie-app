@@ -7,7 +7,7 @@ import 'package:movie_app/presentation/journeys/favorite/favorite_movie_card_wid
 class FavoriteMovieGridView extends StatelessWidget {
   final List<MovieEntity> movies;
 
-  const FavoriteMovieGridView({Key key, @required this.movies})
+  const FavoriteMovieGridView({Key? key, required this.movies})
       : super(key: key);
   @override
   Widget build(BuildContext context) {

@@ -45,13 +45,13 @@ class NavigationDrawer extends StatelessWidget {
             ),
           ),
           NavigationListItem(
-            title: TranslationConstants.favoriteMovies.t(context),
+            title: TranslationConstants.favoriteMovies.t(context) ?? "",
             onPressed: () {
               Navigator.of(context).pushNamed(RouteList.favorite);
             },
           ),
           NavigationExpandedListItem(
-            title: TranslationConstants.language.t(context),
+            title: TranslationConstants.language.t(context) ?? "",
             onPressed: (index) {
               BlocProvider.of<LanguageCubit>(context)
                   .toggleLanguage(Languages.languages[index]);
@@ -60,14 +60,14 @@ class NavigationDrawer extends StatelessWidget {
           ),
           //comments
           NavigationListItem(
-            title: TranslationConstants.feedback.t(context),
+            title: TranslationConstants.feedback.t(context) ?? "",
             onPressed: () {
               Navigator.of(context).pop();
-              Wiredash.of(context).show();
+              Wiredash.of(context)!.show();
             },
           ),
           NavigationListItem(
-            title: TranslationConstants.about.t(context),
+            title: TranslationConstants.about.t(context) ?? "",
             onPressed: () {
               Navigator.of(context).pop();
               _showDialog(context);
@@ -80,7 +80,7 @@ class NavigationDrawer extends StatelessWidget {
                   .pushNamedAndRemoveUntil(RouteList.initial, (route) => false);
             },
             child: NavigationListItem(
-              title: TranslationConstants.logout.t(context),
+              title: TranslationConstants.logout.t(context) ?? "",
               onPressed: () {
                 BlocProvider.of<LoginCubit>(context).logout();
               },

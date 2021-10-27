@@ -31,8 +31,9 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
   @override
   Future<Either<AppError, bool>> loginUser(Map<String, dynamic> body) async {
     final requestTokenEitherResponse = await _getRequestToken();
-    final token1 =
-        requestTokenEitherResponse.getOrElse(() => null)?.requestToken ?? '';
+    final token1 = requestTokenEitherResponse
+        .getOrElse(() => RequestTokenModel())
+        .requestToken;
 
     try {
       body.putIfAbsent('request_token', () => token1);
@@ -40,11 +41,8 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
           await _authenticationRemoteDataSource.validateWithLogin(body);
       final sessionId = await _authenticationRemoteDataSource
           .createSession(validateWithLoginToken.toJson());
-      if (sessionId != null) {
-        await _authenticationLocalDataSource.saveSessionId(sessionId);
-        return Right(true);
-      }
-      return Left(AppError(AppErrorType.sessionDenied));
+      await _authenticationLocalDataSource.saveSessionId(sessionId);
+      return Right(true);
     } on SocketException {
       return Left(AppError(AppErrorType.network));
     } on UnauthorizedException {
@@ -57,10 +55,12 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
   @override
   Future<Either<AppError, void>> logoutUser() async {
     final sessionId = await _authenticationLocalDataSource.getSessionId();
-    await Future.wait([
-      _authenticationRemoteDataSource.deleteSession(sessionId),
-      _authenticationLocalDataSource.deleteSessionId(),
-    ]);
+    if (sessionId != null) {
+      await Future.wait([
+        _authenticationRemoteDataSource.deleteSession(sessionId),
+        _authenticationLocalDataSource.deleteSessionId(),
+      ]);
+    }
     print(await _authenticationLocalDataSource.getSessionId());
     return Right(Unit);
   }

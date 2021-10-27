@@ -54,12 +54,12 @@ class CustomSearchMovieDelegate extends SearchDelegate {
     searchMovieCubit.searchTermChanged(query);
 
     return BlocBuilder<SearchMovieCubit, SearchMovieState>(
-      cubit: searchMovieCubit,
+      bloc: searchMovieCubit,
       builder: (context, state) {
         if (state is SearchMovieError) {
           return AppErrorWidget(
             appErrorType: state.appErrorType,
-            onPressed: () => searchMovieCubit?.searchTermChanged(query),
+            onPressed: () => searchMovieCubit.searchTermChanged(query),
           );
         } else if (state is SearchMovieLoaded) {
           final movies = state.movies;
@@ -68,7 +68,7 @@ class CustomSearchMovieDelegate extends SearchDelegate {
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: Sizes.dimen_64.w),
                 child: Text(
-                  TranslationConstants.noMoviesSearched.t(context),
+                  TranslationConstants.noMoviesSearched.t(context) ?? "",
                   textAlign: TextAlign.center,
                 ),
               ),

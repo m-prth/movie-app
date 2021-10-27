@@ -9,10 +9,10 @@ class AppLocalizations {
 
   AppLocalizations(this.locale);
 
-  static AppLocalizations of(context) =>
+  static AppLocalizations? of(context) =>
       Localizations.of<AppLocalizations>(context, AppLocalizations);
 
-  Map<String, String> _localizedStrings;
+  late Map<String, String> _localizedStrings;
 
   Future<bool> load() async {
     final jsonString = await rootBundle
@@ -21,10 +21,11 @@ class AppLocalizations {
 
     _localizedStrings =
         jsonMap.map((key, value) => MapEntry(key, value.toString()));
+
     return true;
   }
 
-  String translate(String key) {
+  String? translate(String key) {
     return _localizedStrings[key];
   }
 
@@ -34,6 +35,7 @@ class AppLocalizations {
 
 class _AppLocalizationDelegate extends LocalizationsDelegate<AppLocalizations> {
   const _AppLocalizationDelegate();
+
   @override
   bool isSupported(Locale locale) {
     return Languages.languages
@@ -44,9 +46,9 @@ class _AppLocalizationDelegate extends LocalizationsDelegate<AppLocalizations> {
 
   @override
   Future<AppLocalizations> load(Locale locale) async {
-    AppLocalizations appLocalizations = AppLocalizations(locale);
-    await appLocalizations.load();
-    return appLocalizations;
+    AppLocalizations localizations = AppLocalizations(locale);
+    await localizations.load();
+    return localizations;
   }
 
   @override
