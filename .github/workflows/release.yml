@@ -26,8 +26,3 @@ jobs:
 
       - name: Analyze the code
         run: flutter analyze 
-
-  test:
-
-
-  build:
