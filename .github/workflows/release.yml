@@ -50,7 +50,7 @@ jobs:
         uses: VGVentures/very-good-coverage@v1.1.1
         with:
           path: "./coverage/lcov.info"
-          min_covergae: 1
+          min_coverage: 1
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
