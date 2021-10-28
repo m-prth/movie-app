@@ -11,6 +11,7 @@
 * Applied modern flutter practices like bloc and hive to control state and data throughout the application.
 * Getting help from the TMDB API for all the movie details.
 * Made use of packages like ```get_it```, ```dartz```, ```equatable``` for efficient memory management.
+* CI/CD is implemented using Github Actions.
 
 ---
 ## Specifications:
