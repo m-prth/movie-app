@@ -63,26 +63,26 @@ jobs:
     runs-on: ubuntu-latest
     # needs: [lint, test]
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Fetch all history for all tags and branches
-        run: git fetch --unshallow --tags
+    - name: Fetch all history for all tags and branches
+      run: git fetch --unshallow --tags
 
-      - name: Install GitVersion
-        uses: gittools/actions/getversion/setup@v0.9.10
-        with: 
-          versionSpec: '5.x'
+    - name: Install GitVersion
+      uses: gittools/actions/gitversion/setup@v0.9.10
+      with:
+        versionSpec: '5.x'
 
-      - name: Use GitVersion
-        id: gitversion
-        uses: gittools/actions/gitversion/execute@v0.9.10
+    - name: Use GitVersion
+      id: gitversion
+      uses: gittools/actions/gitversion/execute@v0.9.10
 
-      - name: Create version.txt with nuGitVersion
-        run: echo ${{ steps.gitversion.outputs.nuGitVersion }} >> version.txt
+    - name: Create version.txt with nuGetVersion
+      run: echo ${{ steps.gitversion.outputs.nuGetVersion  }} > version.txt
 
-      - name: Upload version.txt
-        uses: actions/upload-artifact@v2
-        with: 
-          name: gitversion
-          path: version.txt
+    - name: Upload version.txt
+      uses: actions/upload-artifact@v2
+      with:
+        name: gitversion
+        path: version.txt
