@@ -98,7 +98,7 @@ jobs:
       - name: Setup Java JDK
         uses: actions/setup-java@v1
         with:
-          java_version: '12.x'
+          java-version: '12.x'
 
       - name: Clone flutter repository from stable channel with 2.2.3 version
         uses: subosito/flutter-action@v1
